@@ -22,23 +22,24 @@ void blahblah(int *newPos, int *oldPos);
 int newPos(-1), oldPos(-1);
 
 void onTopBarClickListener(int id){
-	cout << "id is: " << id << endl;
+	
+	cout << "tri - id is: " << id << endl;
+	
+	refreshScreen();
+	
 	switch(id){
 		
 		case TOPBAR_FILE:
-			refreshScreen();
 			createDialogFile();
 			addInsideFileButtons();
 		break;
 		
 		case TOPBAR_ALGO:
-			refreshScreen();
 			createDialogAlgo();
 			addInsideAlgoButtons();
 		break;
 		
 		case TOPBAR_HELP:	
-			refreshScreen();
 			createDialogHelp();
 		break;
 		
@@ -80,10 +81,9 @@ void onTopBarClickListener(int id){
 			break;
 			
 		default:
+			
 			break;
 	}
-	
-//	refreshScreen();
 	
 }
 
@@ -93,13 +93,14 @@ int main(){
 	initwindow(WINDOW_WIDTH + 5, WINDOW_HIGHT + 10);
 	
     initScreen();
-    initTopBar(onTopBarClickListener);
+//    initTopBar(onTopBarClickListener);
+	
+	drawTopBar();
 
     listenMouseEvent();
     
 	getch();
 }
-
 
 void listenMouseEvent()
 {
@@ -116,12 +117,20 @@ void listenMouseEvent()
 		if (ismouseclick(WM_LBUTTONDOWN))// bat sk khi nhan chuot trai
 		{
 			clearmouseclick(WM_LBUTTONDOWN);
+			
+			bool c = onMouseClickInTopBar(x, y, onTopBarClickListener);
+			
+			if(c) continue;
 
 			blahblah(&newPos, &oldPos);
-
+			
+			cout << "hoang" << x<< "-" << y << endl;
+			
 		}
 		delay(DELAY_VALUE);
 	}
+
+	
 }
 
 void blahblah(int *newPos, int *oldPos){

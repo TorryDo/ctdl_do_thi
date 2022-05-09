@@ -34,6 +34,9 @@ void drawMatrixZone(){
 	setcolor(7);
 	setbkcolor(7);
 	setfillstyle(1, 7);
+	
+	setlinestyle(SOLID_LINE, 0, NORM_WIDTH);
+	
 	setusercharsize(1, 2, 1, 2);
 	settextstyle(COMPLEX_FONT, HORIZ_DIR, USER_CHAR_SIZE);
 	settextjustify(LEFT_TEXT, TOP_TEXT);
@@ -83,6 +86,9 @@ void drawTextZone(){
 	setcolor(7);
 	setbkcolor(7);
 	setfillstyle(1, 7);
+	
+	setlinestyle(SOLID_LINE, 0, NORM_WIDTH);
+	
 	setusercharsize(1, 2, 1, 2);
 	settextstyle(COMPLEX_FONT, HORIZ_DIR, USER_CHAR_SIZE);
 	settextjustify(LEFT_TEXT, TOP_TEXT);
@@ -98,18 +104,23 @@ void drawWorkingZone(){
 	setcolor(7);
 	setbkcolor(7);
 	setfillstyle(1, 7);
+	
+	setlinestyle(SOLID_LINE, 0, NORM_WIDTH);
+	
 	setusercharsize(1, 2, 1, 2);
 	settextstyle(COMPLEX_FONT, HORIZ_DIR, USER_CHAR_SIZE);
 	settextjustify(LEFT_TEXT, TOP_TEXT);
 	setcolor(BLACK);
 	outtextxy(wbLEFT + 1, mTOP + 35 , "WorkSpace");
-	bar(wbLEFT, mTOP + 55, wRIGHT, wBOTTOM - 2);
+	bar(wbLEFT, mTOP + 55, wRIGHT, 566);
 }
 
 void drawLimitZone(){
 	setcolor(0);
-	//setlinestyle(SOLID_LINE, 0, THICK_WIDTH);
-	rectangle(wbLEFT, mTOP + 55, wRIGHT, wBOTTOM - 2);
+	
+	setlinestyle(SOLID_LINE, 0, NORM_WIDTH);
+	
+	rectangle(wbLEFT, mTOP + 55, wRIGHT, 566);
 }
 //================ShowButton======================
 

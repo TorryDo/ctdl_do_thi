@@ -15,7 +15,7 @@ inline bool isInWorkingZone(int x, int y)
 inline bool isInLimitZone(int x, int y)
 {	
 	return (x > wbLEFT + RADIUS_VALUE && x < wRIGHT - RADIUS_VALUE 
-		&& y > wTOP + 55 + RADIUS_VALUE && y < wBOTTOM - RADIUS_VALUE);
+		&& y > wTOP + 55 + RADIUS_VALUE && y < 566 - RADIUS_VALUE);
 }
 inline float toFloat(char const *s)
 {

@@ -225,23 +225,31 @@ void closePreviousThread()
 }
  
 
-void listenTopBarInput(void (*listener)(int)){
-	int x, y;
+//void listenTopBarInput(void (*listener)(int)){
+//	int x, y;
+//
+//	while (canListenTopBarInput)
+//	{
+//		if (ismouseclick(WM_LBUTTONDOWN))
+//		{
+//			getmouseclick(WM_LBUTTONDOWN, x, y);
+//			cout << x << " - " << y << endl;
+//
+//			int id = onMouseClick(x, y);
+//			
+//			(*listener)(id);
+//			
+//		}
+//	}
+//	
+//}
 
-	while (canListenTopBarInput)
-	{
-		if (ismouseclick(WM_LBUTTONDOWN))
-		{
-			getmouseclick(WM_LBUTTONDOWN, x, y);
-			cout << x << " - " << y << endl;
-
-			int id = onMouseClick(x, y);
+bool onMouseClickInTopBar(int x, int y, void (*listener)(int)){
+	int id = onMouseClick(x, y);
 			
-			(*listener)(id);
-			
-		}
-	}
+	(*listener)(id);
 	
+	return id < 0 ? false : true;
 }
 
 int findSelectedButton(int x, int y)
@@ -285,26 +293,6 @@ int onMouseClick(int x, int y)
 		}
 	}
 
-
-
-//	switch (buttonList[buttonPosition].getID())
-//	{
-//	case TOPBAR_FILE:
-//		createDialogFile();
-//		addInsideFileButtons();
-//		break;
-//	case TOPBAR_ALGO:
-//		createDialogAlgo();
-//		addInsideAlgoButtons();
-//		break;
-//	case TOPBAR_HELP:
-//		createDialogHelp();
-//		break;
-//	
-//	default:
-//		break;
-//		
-//	}
 	
 	return buttonList[buttonPosition].getID();
 }
@@ -383,13 +371,13 @@ void createDialogHelp()
 	bar(BUTTON_HELP_LEFT, TOPBAR_BOTTOM, DIALOG_HELP_RIGHT, DIALOG_HELP_BOTTOM);
 }
 
-void initTopBar(void (*listener)(int)){
-	drawTopBar();
-	
-	closePreviousThread();
-	thr = thread(listenTopBarInput, *listener);
-	
-}
+//void initTopBar(void (*listener)(int)){
+//	drawTopBar();
+//	
+//	closePreviousThread();
+//	thr = thread(listenTopBarInput, *listener);
+//	
+//}
 
 
 
