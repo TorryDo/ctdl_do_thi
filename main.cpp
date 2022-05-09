@@ -14,6 +14,7 @@
 #include <thread>
 #include "open_file.hpp"
 #include "save_file.hpp"
+#include "algos.hpp"
 
 using namespace std;
 
@@ -75,7 +76,8 @@ void onTopBarClickListener(int id){
 			break;
 		case TOPBAR_ALGO_DinhThat:	
 			break;
-		case TOPBAR_ALGO_CanhCau:	
+		case TOPBAR_ALGO_CanhCau:
+//			canhCau(&listv);
 			break;
 		case TOPBAR_ALGO_Hamilton:	
 			break;

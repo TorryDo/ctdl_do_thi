@@ -106,7 +106,7 @@ char getKey()
 void printText(const char *str)
 {
 	int const tw = textwidth(str);
-	if (xCursor + tw >= 430) // 10 + tw >= tRIGHT
+	if (xCursor + tw >= 390) // 10 + tw >= tRIGHT
 	{
 		xCursor = xCURSOR;
 		yCursor += TEXTHIGHT;
@@ -393,7 +393,10 @@ void addEdges()
 		refreshGraph(ADD_EDGE_MENU);
 		drawEdge(begin, end, EDGE_HIGHTLIGHT_COLOR);
 		setTextPrintStyle(TEXT_COLOR);
-		printText("Nhap trong so (xoa cung nhap '-') cung ");
+		
+		printText("Nhap trong so (xoa cung nhap '-')");
+		printText("cung ");
+		
 		printText(listv.v[begin]->name);
 		printText("->");
 		printText(listv.v[end]->name);
@@ -487,8 +490,12 @@ void moveVertex()
 	if (isEmptyGraph()) return;
 	int x, y;
 	setTextPrintStyle(TEXT_COLOR);
-	printTextWl("Dung thao tac keo/tha dinh de di chuyen tung dinh");
-	printText("hoac Ctr + keo/tha de di chuyen toan bo do thi.");
+	
+	printTextWl("Dung thao tac keo/tha dinh de di");
+	printTextWl("chuyen tung dinh ! ");
+	printText("hoac Ctr + keo/tha de di chuyen");
+	printText("toan bo do thi ! ");
+	
 	while (1)
 	{
 		int choose = chooseVertex(VERTEX_CHOOSING_COLOR);
@@ -896,7 +903,8 @@ void switchMenuItem(int chose)
 void backToMenu()
 {
 	setTextPrintStyle(TEXT_COLOR);
-	printTextWlb("Nhan phim bat ky hoac click chuot de tiep tuc.");
+	printTextWlb("Nhan phim bat ky hoac click chuot");
+	printTextWlb("de tiep tuc.");
 	if (ismouseclick(WM_LBUTTONDOWN)) clearmouseclick(WM_LBUTTONDOWN);
 	fflush(stdin);
 	while (1)

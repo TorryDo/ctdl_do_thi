@@ -181,7 +181,7 @@ TextButton buttonCanhCau = TextButton(BUTTON_CanhCau_LEFT, BUTTON_CanhCau_TOP, B
 TextButton buttonHamilton = TextButton(BUTTON_Hamilton_LEFT, BUTTON_Hamilton_TOP, BUTTON_Hamilton_RIGHT, BUTTON_Hamilton_BOTTOM, "Hamilton", TOPBAR_ALGO_Hamilton);
 TextButton buttonEuler = TextButton(BUTTON_Euler_LEFT, BUTTON_Euler_TOP, BUTTON_Euler_RIGHT, BUTTON_Euler_BOTTOM, "Euler", TOPBAR_ALGO_Euler);
 TextButton buttonTopoSort = TextButton(BUTTON_TopoSort_LEFT, BUTTON_TopoSort_TOP, BUTTON_TopoSort_RIGHT, BUTTON_TopoSort_BOTTOM, "TopoSort", TOPBAR_ALGO_TopoSort);
-TextButton buttonToMau = TextButton(BUTTON_ToMau_LEFT, BUTTON_ToMau_TOP, BUTTON_ToMau_RIGHT, BUTTON_ToMau_BOTTOM, "To mau", TOPBAR_ALGO_ToMau);
+//TextButton buttonToMau = TextButton(BUTTON_ToMau_LEFT, BUTTON_ToMau_TOP, BUTTON_ToMau_RIGHT, BUTTON_ToMau_BOTTOM, "To mau", TOPBAR_ALGO_ToMau);
 TextButton buttonTPLT = TextButton(BUTTON_TPLT_LEFT, BUTTON_TPLT_TOP, BUTTON_TPLT_RIGHT, BUTTON_TPLT_BOTTOM, "TPLT", TOPBAR_ALGO_TPLT);
 
 // inside help menu
@@ -329,7 +329,7 @@ void addInsideAlgoButtons()
 	buttonList.push_back(buttonHamilton);
 	buttonList.push_back(buttonEuler);
 	buttonList.push_back(buttonTopoSort);
-	buttonList.push_back(buttonToMau);
+//	buttonList.push_back(buttonToMau);
 	buttonList.push_back(buttonTPLT);
 
 	for (int i = 3; i < buttonList.size(); i++)
