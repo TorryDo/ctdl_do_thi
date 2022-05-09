@@ -4,11 +4,8 @@
 #include <vector>
 #include "drawAll.hpp"
 #include "text_button.hpp"
-//#include "func.hpp"
 #define COLOR(r,g,b) (0x04000000 | RGB(r,g,b))
-//#include <windows.h>
-//#include <windowsx.h> 
-//#include "graphics.h"
+
 
 const int TOP_BAR_COLOR = COLOR(134, 198, 244);
 const int HIGHLIGHT_TEXT_COLOR = YELLOW;
@@ -38,7 +35,7 @@ const int DIALOG_FILE_RIGHT = 200;
 const int DIALOG_FILE_BOTTOM = TOPBAR_BOTTOM + 120;
 
 const int DIALOG_ALGO_RIGHT = BUTTON_FILE_RIGHT + (BUTTON_WIDTH * 3);
-const int DIALOG_ALGO_BOTTOM = 400;
+const int DIALOG_ALGO_BOTTOM = 300;
 
 const int DIALOG_HELP_RIGHT = BUTTON_ALGO_RIGHT + 200;
 const int DIALOG_HELP_BOTTOM = 300;
@@ -315,7 +312,6 @@ void addInsideFileButtons()
 
 void removeInsideFileButtons()
 {
-	cout << "remove file button" << endl;
 	for (int i = 3; i < buttonList.size(); i++)
 	{
 		buttonList.pop_back();
@@ -347,7 +343,6 @@ void addInsideAlgoButtons()
 
 void removeInsideAlgoButtons()
 {
-	cout << "remove algo button" << endl;
 	for (int i = 3; i < buttonList.size(); i++)
 	{
 		buttonList.pop_back();
@@ -370,14 +365,6 @@ void createDialogHelp()
 	setfillstyle(SOLID_FILL, HIGHLIGHT_TEXT_COLOR);
 	bar(BUTTON_HELP_LEFT, TOPBAR_BOTTOM, DIALOG_HELP_RIGHT, DIALOG_HELP_BOTTOM);
 }
-
-//void initTopBar(void (*listener)(int)){
-//	drawTopBar();
-//	
-//	closePreviousThread();
-//	thr = thread(listenTopBarInput, *listener);
-//	
-//}
 
 
 

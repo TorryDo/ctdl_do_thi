@@ -12,6 +12,8 @@
 #include "func.hpp"		
 #include "top_bar.hpp"	
 #include <thread>
+#include "open_file.hpp"
+#include "save_file.hpp"
 
 using namespace std;
 
@@ -49,10 +51,13 @@ void onTopBarClickListener(int id){
 			break;
 			
 		case TOPBAR_OPEN_FILE:
+			openFile(&listv);
 			break;
 		case TOPBAR_SAVE_FILE:
+			saveFile(&listv);
 			break;
 		case TOPBAR_CLOSE_FILE:
+			closeFile(&listv);
 			break;
 			
 		case TOPBAR_ALGO_DFS:
@@ -64,6 +69,7 @@ void onTopBarClickListener(int id){
 		case TOPBAR_ALGO_BFS:
 			break;
 		case TOPBAR_ALGO_XtoY:	
+			
 			break;
 		case TOPBAR_ALGO_DinhTru:	
 			break;
@@ -93,10 +99,7 @@ int main(){
 	initwindow(WINDOW_WIDTH + 5, WINDOW_HIGHT + 10);
 	
     initScreen();
-//    initTopBar(onTopBarClickListener);
-	
-	drawTopBar();
-
+		
     listenMouseEvent();
     
 	getch();
