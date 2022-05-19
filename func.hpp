@@ -8,6 +8,9 @@
 #include "constants.hpp" 		// All constants go here
 #include "global_variables.hpp"// All Global variables
 
+#include "queue.hpp"			// int queue using linked list
+#include "stack.hpp"			// int stack also using linked list
+
 //----------------------------BUTTON ALGOGRIMTH------------------------------
 void dfs();
 void bfs();
@@ -574,78 +577,7 @@ void help()
 
 //-------------------------------------------xu ly button menu (file, aglo, quit)
 
-void open(){
-	int x, y;
-//	menu2();
-	while(1){
-		for (int i = 10; i < 12 ;++i)
-		{
-			menuButton[i].showNormalButton();
-			showButtonIcon(menuButton, i);
-			
-			delay(DELAY_VALUE);
-		}
-		if(ismouseclick(WM_LBUTTONDOWN)){
-			getmouseclick(WM_LBUTTONDOWN, x, y);
-			int choose = findButton2(x, y);
-			if(choose == -1) return;
-			if(choose != -1){
-				if(choose == 10) return load();
-				if(choose == 11) return;
-			}
-		}
-	}
-}
-
-void load(){
-	int x, y;
-	while(1){
-		outtextxy(100,200,"hoang");
-		delay(DELAY_VALUE);
-		if(ismouseclick(WM_LBUTTONDOWN)){
-		getmouseclick(WM_LBUTTONDOWN, x, y);
-		int choose = findButton2(x, y);
-		if(choose != 10) return;
-		}
-	}
-}
-
-void aglo(){
-	int x, y;
-//	int newChoose(-1), oldChoose(-1);
-	while(1){
-		for (int i = 12; i < 23 ;++i)
-		{
-			menuButton[i].showNormalButton();
-			showButtonIcon(menuButton, i);
-			
-			delay(DELAY_VALUE);
-		}
-		if(ismouseclick(WM_LBUTTONDOWN)){
-			getmouseclick(WM_LBUTTONDOWN, x, y);
-			int choose = findButton3(x, y);
-			//newChoose = choose;
-			if(choose == -1) return;
-			if(choose == 12) return dfs();
-			if(choose == 13) return bfs();
-			if(choose == 14) return shortestWayXY();
-		}
-	}
-}
-
 // demo thuat toan -------------------------------------------------------------------------
-//void dfs(){
-//	int x, y;
-//	while(1){
-//		outtextxy(100, 300, "My");
-//		delay(DELAY_VALUE);
-//		if(ismouseclick(WM_LBUTTONDOWN)){
-//		getmouseclick(WM_LBUTTONDOWN, x, y);
-//		int choose = findButton3(x, y);
-//		if(choose != 12) return;
-//		}
-//	}
-//}
 
 void dfs()
 {
@@ -673,7 +605,6 @@ void dfsTraveler(int u)
 		printText(listv.v[u]->name);
 		printText("->");
 		delay(delayRunTime);
-		//for (int i = listv.num - 1; i >= 0 ; --i) //like recursive order
 		for (int i = 0; i < listv.num; ++i)
 			if (trace[i] == 0 && adjaGraph[u][i] != NO_EDGE_VALUE)
 			{

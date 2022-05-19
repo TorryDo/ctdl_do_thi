@@ -1,7 +1,5 @@
-#include <fstream>				// For open & save file
+
 #include <iostream>				// Debug std::cin std::cout
-#include "queue.hpp"			// int queue using linked list
-#include "stack.hpp"			// int stack also using linked list
 #include "button.hpp"			// Button structures
 #include "vertex.hpp"			// Vertex structures
 #include "list_vertices.hpp"	// Manage all vertices
@@ -18,16 +16,27 @@
 
 using namespace std;
 
-void listenMouseEvent();
-
-void blahblah(int *newPos, int *oldPos);
-
 int newPos(-1), oldPos(-1);
 
+
+void listenMouseEvent();
+void onMouseClick(int *newPos, int *oldPos);
+void onTopBarClickListener(int id);
+
+
+int main(){
+	
+	initwindow(WINDOW_WIDTH + 5, WINDOW_HIGHT + 10);
+	
+    initScreen();
+		
+    listenMouseEvent();
+    
+}
+
+
 void onTopBarClickListener(int id){
-	
-	cout << "tri - id is: " << id << endl;
-	
+		
 	refreshScreen();
 	
 	switch(id){
@@ -47,12 +56,13 @@ void onTopBarClickListener(int id){
 		break;
 		
 		case TOPBAR_OUTSIDER:
-			blahblah(&newPos, &oldPos);
+//			onMouseClick(&newPos, &oldPos);
 			drawTopBar();
 			break;
 			
 		case TOPBAR_OPEN_FILE:
 			openFile(&listv);
+			refreshScreen();
 			break;
 		case TOPBAR_SAVE_FILE:
 			saveFile(&listv);
@@ -68,6 +78,9 @@ void onTopBarClickListener(int id){
 			break;
 			
 		case TOPBAR_ALGO_BFS:
+			
+			bfs();
+			
 			break;
 		case TOPBAR_ALGO_XtoY:	
 			
@@ -95,21 +108,9 @@ void onTopBarClickListener(int id){
 	
 }
 
-thread mainThread;
-
-int main(){
-	initwindow(WINDOW_WIDTH + 5, WINDOW_HIGHT + 10);
-	
-    initScreen();
-		
-    listenMouseEvent();
-    
-	getch();
-}
-
 void listenMouseEvent()
 {
-	int x, y;//lua toa do
+	int x, y;
 	
 	while (1)
 	{
@@ -127,18 +128,15 @@ void listenMouseEvent()
 			
 			if(c) continue;
 
-			blahblah(&newPos, &oldPos);
-			
-			cout << "hoang" << x<< "-" << y << endl;
-			
+			onMouseClick(&newPos, &oldPos);
+						
 		}
 		delay(DELAY_VALUE);
 	}
-
 	
 }
 
-void blahblah(int *newPos, int *oldPos){
+void onMouseClick(int *newPos, int *oldPos){
 	clearmouseclick(WM_LBUTTONDOWN);
 	if (*newPos != -1)
 	{

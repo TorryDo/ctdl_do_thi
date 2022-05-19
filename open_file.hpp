@@ -9,12 +9,7 @@
 #include <limits.h>
 #include <stddef.h>
 #include <sstream>
-#include <Windows.h>
-#include <windows.h>
-#include <windowsx.h> 
-//#ifndef WINBGI_H
-#define WINBGI_H
-//#include "list_vertices.hpp"
+//#define WINBGI_H
 
 using namespace std;
 
@@ -22,11 +17,15 @@ const char DIALOG_WARN_OPEN_FILE[] = " workspace dang mo \n ban co muon mo file 
 
 void openFile(ListVertices *listv)
 {
-		
-	if (MessageBox(GetActiveWindow(), DIALOG_WARN_OPEN_FILE,"Thong bao", MB_APPLMODAL | MB_ICONWARNING | MB_YESNO) == IDNO) return;
+	
+	if (
+		!listv->isEmpty() && 
+		MessageBox(GetActiveWindow(), DIALOG_WARN_OPEN_FILE,"Thong bao", MB_APPLMODAL | MB_ICONWARNING | MB_YESNO) == IDNO
+	) return;
+	
 	OPENFILENAME file;
 	char fileName[MAX_PATH] = "\0";
-//	_getcwd(fileName, MAX_PATH);
+	
 	ZeroMemory(&file, sizeof(file));
 	file.lStructSize = sizeof(file);
 	file.lpstrFile = fileName;

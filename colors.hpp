@@ -74,7 +74,7 @@ static int const VERTEX_MORE_COLOR[] = {BLACK,
 enum edgeColors
 {
 	EDGE_COLOR 				= WHITE,
-	EDGE_VISTED_COLOR 		= COLOR(204, 0, 0),
+	EDGE_VISTED_COLOR 		= COLOR(204,0,0),
 	EDGE_HIGHTLIGHT_COLOR 	= COLOR(215,0,0)
 };
 enum textColors
