@@ -10,7 +10,7 @@
 #include <cmath>
 inline bool isInWorkingZone(int x, int y)
 {	
-	return (x > wbLEFT && x < wRIGHT && y > wTOP && y < wBOTTOM);
+	return (x > wbLEFT && x < wRIGHT && y > wTOP && y < aBOTTOM);
 }
 inline bool isInLimitZone(int x, int y)
 {	

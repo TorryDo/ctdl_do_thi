@@ -84,6 +84,8 @@ void onTopBarClickListener(int id){
 			break;
 		case TOPBAR_ALGO_XtoY:	
 			
+			shortestWayXY();
+			
 			break;
 		case TOPBAR_ALGO_DinhTru:	
 			break;
