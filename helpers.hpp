@@ -106,7 +106,7 @@ inline const Type& max(const Type& a, const Type& b)
 }
 
 template<typename Type>
-inline const Type& min(const Type& a, const Type& b)
+inline const Type& minn(const Type& a, const Type& b)
 {
 	if (a < b)
 		return a;

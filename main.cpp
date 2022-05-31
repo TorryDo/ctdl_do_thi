@@ -13,7 +13,7 @@
 #include "open_file.hpp"
 #include "save_file.hpp"
 #include "algos.hpp"
-#include "algo2.hpp"
+// #include "algo2.hpp"
 #include "graph.hpp"
 
 using namespace std;
@@ -84,51 +84,31 @@ void onTopBarClickListener(int id)
 		break;
 
 	case TOPBAR_ALGO_DinhTru:
-		//			dinhTru();
+		cutVertex();
 		break;
 
 	case TOPBAR_ALGO_DinhThat:
-
+		knotVertex();
 		break;
 
 	case TOPBAR_ALGO_CanhCau:
-		//			canhCau(&listv);
+		bridgeEdge();
 		break;
 
 	case TOPBAR_ALGO_Hamilton:
-
+	// hamilton()
 		break;
 
 	case TOPBAR_ALGO_Euler:
+	// euler()
 		break;
 
 	case TOPBAR_ALGO_TopoSort:
-
 		//			topoSort();
-
 		break;
 
 	case TOPBAR_ALGO_TPLT:
-	{
-		Graph graph;
-		graph.listVertices = listv;
-		graph.num = listv.num;
-
-		for (int i = 0; i < graph.num; i++)
-		{
-			for (int j = 0; j < graph.num; j++)
-			{
-				graph.edges[i][j] = adjaGraph[i][j];
-				// if (adjaGraph[i][j] == INT_MIN)
-				// 	continue;
-				// cout << adjaGraph[i][j] << "  ";
-			}
-			cout << endl;
-		}
-
-		TPLT(graph);
-	}
-
+		SCC();
 	break;
 
 	default:
