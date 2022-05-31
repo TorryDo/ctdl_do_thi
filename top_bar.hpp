@@ -7,6 +7,8 @@
 #define COLOR(r, g, b) (0x04000000 | RGB(r, g, b))
 
 const int TOP_BAR_COLOR = COLOR(75, 123, 229);
+const int TOP_BAR_TEXT_COLOR = WHITE;
+const int TOP_BAR_ITEM_BUTTON_COLOR = COLOR(113, 157, 255);
 const int HIGHLIGHT_TEXT_COLOR = YELLOW;
 
 using namespace std;
@@ -31,7 +33,7 @@ const int BUTTON_HELP_LEFT = BUTTON_ALGO_RIGHT;
 const int BUTTON_HELP_RIGHT = BUTTON_ALGO_RIGHT + BUTTON_WIDTH;
 
 const int DIALOG_FILE_RIGHT = 200;
-const int DIALOG_FILE_BOTTOM = TOPBAR_BOTTOM + 130;
+const int DIALOG_FILE_BOTTOM = TOPBAR_BOTTOM + BUTTON_HEIGHT * 4 + 10;
 
 const int DIALOG_ALGO_RIGHT = BUTTON_FILE_RIGHT + (BUTTON_WIDTH * 3);
 const int DIALOG_ALGO_BOTTOM = 300;
@@ -40,18 +42,18 @@ const int DIALOG_HELP_RIGHT = BUTTON_ALGO_RIGHT + 200;
 const int DIALOG_HELP_BOTTOM = 300;
 
 // button open file
-const int BUTTON_OPEN_FILE_LEFT = BUTTON_FILE_LEFT + 5;
-const int BUTTON_OPEN_FILE_RIGHT = DIALOG_FILE_RIGHT - 5;
+const int BUTTON_OPEN_FILE_LEFT = BUTTON_FILE_LEFT;
+const int BUTTON_OPEN_FILE_RIGHT = DIALOG_FILE_RIGHT;
 const int BUTTON_OPEN_FILE_TOP = TOPBAR_BOTTOM;
 const int BUTTON_OPEN_FILE_BOTTOM = BUTTON_OPEN_FILE_TOP + BUTTON_HEIGHT;
 
-const int BUTTON_SAVE_FILE_LEFT = BUTTON_FILE_LEFT + 5;
-const int BUTTON_SAVE_FILE_RIGHT = DIALOG_FILE_RIGHT - 5;
+const int BUTTON_SAVE_FILE_LEFT = BUTTON_FILE_LEFT;
+const int BUTTON_SAVE_FILE_RIGHT = DIALOG_FILE_RIGHT;
 const int BUTTON_SAVE_FILE_TOP = BUTTON_OPEN_FILE_BOTTOM;
 const int BUTTON_SAVE_FILE_BOTTOM = BUTTON_SAVE_FILE_TOP + BUTTON_HEIGHT;
 
-const int BUTTON_CLOSE_FILE_LEFT = BUTTON_FILE_LEFT + 5;
-const int BUTTON_CLOSE_FILE_RIGHT = DIALOG_FILE_RIGHT - 5;
+const int BUTTON_CLOSE_FILE_LEFT = BUTTON_FILE_LEFT;
+const int BUTTON_CLOSE_FILE_RIGHT = DIALOG_FILE_RIGHT;
 const int BUTTON_CLOSE_FILE_TOP = BUTTON_SAVE_FILE_BOTTOM;
 const int BUTTON_CLOSE_FILE_BOTTOM = BUTTON_CLOSE_FILE_TOP + BUTTON_HEIGHT;
 
@@ -204,7 +206,7 @@ void drawTopBar()
 	{
 		buttonList[i].setBackgroundColor(TOP_BAR_COLOR);
 		buttonList[i].setHighLightColor(HIGHLIGHT_TEXT_COLOR);
-		buttonList[i].setTextColor(TEXT_COLOR);
+		buttonList[i].setTextColor(TOP_BAR_TEXT_COLOR);
 		buttonList[i].show();
 	}
 }
@@ -278,7 +280,7 @@ void addInsideFileButtons()
 
 	for (int i = 3; i < buttonList.size(); i++)
 	{
-		buttonList[i].setBackgroundColor(GREEN);
+		buttonList[i].setBackgroundColor(TOP_BAR_ITEM_BUTTON_COLOR);
 		buttonList[i].setHighLightColor(RED);
 		buttonList[i].setTextColor(WHITE);
 		buttonList[i].show();
@@ -308,7 +310,7 @@ void addInsideAlgoButtons()
 
 	for (int i = 3; i < buttonList.size(); i++)
 	{
-		buttonList[i].setBackgroundColor(GREEN);
+		buttonList[i].setBackgroundColor(TOP_BAR_ITEM_BUTTON_COLOR);
 		buttonList[i].setHighLightColor(RED);
 		buttonList[i].setTextColor(WHITE);
 		buttonList[i].show();

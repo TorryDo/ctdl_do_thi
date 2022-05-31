@@ -78,6 +78,6 @@ enum edgeColors
 };
 enum textColors
 {
-	TEXT_COLOR = WHITE, // COLOR(215,0,0)
+	TEXT_COLOR = BLACK, // COLOR(215,0,0)
 	TEXT_HIGHTLIGHT_COLOR = BLUE
 };
