@@ -4,10 +4,9 @@
 #include <vector>
 #include "drawAll.hpp"
 #include "text_button.hpp"
-#define COLOR(r,g,b) (0x04000000 | RGB(r,g,b))
+#define COLOR(r, g, b) (0x04000000 | RGB(r, g, b))
 
-
-const int TOP_BAR_COLOR = COLOR(134, 198, 244);
+const int TOP_BAR_COLOR = COLOR(75, 123, 229);
 const int HIGHLIGHT_TEXT_COLOR = YELLOW;
 
 using namespace std;
@@ -32,7 +31,7 @@ const int BUTTON_HELP_LEFT = BUTTON_ALGO_RIGHT;
 const int BUTTON_HELP_RIGHT = BUTTON_ALGO_RIGHT + BUTTON_WIDTH;
 
 const int DIALOG_FILE_RIGHT = 200;
-const int DIALOG_FILE_BOTTOM = TOPBAR_BOTTOM + 120;
+const int DIALOG_FILE_BOTTOM = TOPBAR_BOTTOM + 130;
 
 const int DIALOG_ALGO_RIGHT = BUTTON_FILE_RIGHT + (BUTTON_WIDTH * 3);
 const int DIALOG_ALGO_BOTTOM = 300;
@@ -126,13 +125,11 @@ void createDialogFile();
 void createDialogAlgo();
 void createDialogHelp();
 
-
 void addInsideFileButtons();
 void removeInsideFileButtons();
 
 void addInsideAlgoButtons();
 void removeInsideAlgoButtons();
-
 
 // button id --------------------------------------------
 
@@ -193,7 +190,6 @@ thread thr;
 
 // code ------------------------------------------------------------------------------
 
-
 void drawTopBar()
 {
 	setfillstyle(SOLID_FILL, TOP_BAR_COLOR);
@@ -220,11 +216,12 @@ void closePreviousThread()
 	canListenTopBarInput = true;
 }
 
-bool onMouseClickInTopBar(int x, int y, void (*listener)(int)){
+bool onMouseClickInTopBar(int x, int y, void (*listener)(int))
+{
 	int id = onMouseClickInTopBar(x, y);
-			
+
 	(*listener)(id);
-	
+
 	return id < 0 ? false : true;
 }
 
@@ -234,7 +231,7 @@ int findSelectedButton(int x, int y)
 	{
 		if (buttonList[i].isButtonClicked(x, y))
 		{
-//			cout << "selected button = " << i << endl;
+			//			cout << "selected button = " << i << endl;
 			return i;
 		}
 	}
@@ -252,7 +249,7 @@ int onMouseClickInTopBar(int x, int y)
 	{
 		removeInsideFileButtons();
 		removeInsideAlgoButtons();
-		
+
 		return TOPBAR_OUTSIDER;
 	}
 
@@ -269,7 +266,6 @@ int onMouseClickInTopBar(int x, int y)
 		}
 	}
 
-	
 	return buttonList[buttonPosition].getID();
 }
 
@@ -330,19 +326,16 @@ void removeInsideAlgoButtons()
 // child
 void createDialogFile()
 {
-	setfillstyle(SOLID_FILL, HIGHLIGHT_TEXT_COLOR);
+	setfillstyle(SOLID_FILL, TOP_BAR_COLOR);
 	bar(BUTTON_FILE_LEFT, TOPBAR_BOTTOM, DIALOG_FILE_RIGHT, DIALOG_FILE_BOTTOM);
 }
 void createDialogAlgo()
 {
-	setfillstyle(SOLID_FILL, HIGHLIGHT_TEXT_COLOR);
+	setfillstyle(SOLID_FILL, TOP_BAR_COLOR);
 	bar(BUTTON_ALGO_LEFT, TOPBAR_BOTTOM, DIALOG_ALGO_RIGHT, DIALOG_ALGO_BOTTOM);
 }
 void createDialogHelp()
 {
-	setfillstyle(SOLID_FILL, HIGHLIGHT_TEXT_COLOR);
+	setfillstyle(SOLID_FILL, TOP_BAR_COLOR);
 	bar(BUTTON_HELP_LEFT, TOPBAR_BOTTOM, DIALOG_HELP_RIGHT, DIALOG_HELP_BOTTOM);
 }
-
-
-

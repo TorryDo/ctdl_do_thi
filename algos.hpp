@@ -446,22 +446,57 @@ void bridgeEdge()
 	return backToMenu();
 }
 
-// void hamilton()
-// {
-// 	if (isEmptyGraph())
-// 		return;
-// 	int path[listv.num];
-// 	setArrayTo(trace, listv.num, 0);
-// 	bool continueRun = 1;
-// 	for (int i = 0; i < listv.num; ++i)
-// 		if (continueRun && dfsToCheckConnected(isExistDirectedEdge, i)) // from i can visit all others
-// 		{
-// 			setArrayTo(trace, listv.num, 0);
-// 			path[0] = i;
-// 			trace[i] = 1;
-// 			recursiveHamilton(1, path, continueRun);
-// 		}
-// 	setTextPrintStyle(TEXT_COLOR);
-// 	printText("Tim kiem ket thuc.");
-// 	return backToMenu();
-// }
+bool numbering(int *degIn, int *order) // Kahns algorith
+{
+	int const &NUM = listv.num;
+	queue q;
+	for (int i = 0; i < NUM; ++i)
+		if (degIn[i] == 0)
+			q.push(i);
+	int u, count(0);
+	while (!q.isEmpty())
+	{
+		u = q.pop();
+		order[count++] = u;
+		for (int i = 0; i < NUM; ++i)
+			if (adjaGraph[u][i] != NO_EDGE_VALUE)
+				if (--degIn[i] == 0)
+					q.push(i);
+	}
+	return (count == NUM);
+}
+
+void topoSort()
+{
+	if (isEmptyGraph())
+		return;
+	int const &NUM = listv.num;
+	int degIn[NUM];
+	int order[NUM];
+	for (int i = 0; i < NUM; ++i)
+	{
+		degIn[i] = 0;
+		for (int j = 0; j < NUM; ++j)
+			if (adjaGraph[j][i] != NO_EDGE_VALUE)
+				++degIn[i];
+	}
+	setTextPrintStyle(TEXT_COLOR);
+	if (numbering(degIn, order))
+	{
+		printTextWl("Thu tu sap xep topo: ");
+		for (int i = 0; i < NUM; ++i)
+		{
+			if (getKey() == KEY_ESC)
+				break;
+			listv.v[order[i]]->show(VERTEX_VISTED_COLOR);
+			setTextPrintStyle(TEXT_HIGHTLIGHT_COLOR);
+			printText(listv.v[order[i]]->name);
+			printText("->");
+			delay(delayRunTime);
+		}
+		deleteText("->");
+	}
+	else
+		printText("Do thi khong ton tai chu trinh.");
+	return backToMenu();
+}

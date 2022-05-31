@@ -4,12 +4,12 @@
 #include "button.hpp"			// Button structures
 #include "vertex.hpp"			// Vertex structures
 #include "list_vertices.hpp"	// Manage all vertices
-#include "helpers.hpp" 			// Basic functions & draw edges
-#include "constants.hpp" 		// All constants go here
-#include "global_variables.hpp"// All Global variables
+#include "helpers.hpp"			// Basic functions & draw edges
+#include "constants.hpp"		// All constants go here
+#include "global_variables.hpp" // All Global variables
 
-#include "queue.hpp"			// int queue using linked list
-#include "stack.hpp"			// int stack also using linked list
+#include "queue.hpp" // int queue using linked list
+#include "stack.hpp" // int stack also using linked list
 
 //----------------------------BUTTON ALGOGRIMTH------------------------------
 void dfs();
@@ -56,8 +56,8 @@ int chooseVertex(int, int skipReset = -1);
 //---
 void setTextPrintStyle(int);
 void printText(float);
-void printText(const char*);
-void deleteText(const char*);
+void printText(const char *);
+void deleteText(const char *);
 template <typename Type>
 void printTextWl(Type); // print text -> endl
 template <typename Type>
@@ -89,18 +89,18 @@ char getKey()
 		char c = getch();
 		switch (c)
 		{
-			case KEY_ESC:
-				return KEY_ESC;
-			case ARROW_KEY:
-				c = getch();
-				adjustSpeed(c);
-				return c;
-			case KEY_Q:
-				return KEY_Q;
-			case KEY_LQ:
-				return KEY_Q;
-			default:
-				return KEY_NULL;
+		case KEY_ESC:
+			return KEY_ESC;
+		case ARROW_KEY:
+			c = getch();
+			adjustSpeed(c);
+			return c;
+		case KEY_Q:
+			return KEY_Q;
+		case KEY_LQ:
+			return KEY_Q;
+		default:
+			return KEY_NULL;
 		}
 	}
 	return KEY_NULL;
@@ -114,7 +114,7 @@ void printText(const char *str)
 		xCursor = xCURSOR;
 		yCursor += TEXTHIGHT;
 	}
-	if (yCursor > tBOTTOM - TEXTHIGHT) //510 < 620
+	if (yCursor > tBOTTOM - TEXTHIGHT) // 510 < 620
 	{
 		drawTextZone();
 		xCursor = xCURSOR;
@@ -134,7 +134,7 @@ void printText(float value)
 
 void setTextPrintStyle(int color)
 {
-//	setusercharsize(9, 10, 9, 10);
+	//	setusercharsize(9, 10, 9, 10);
 	settextstyle(COMPLEX_FONT, HORIZ_DIR, 1);
 	setbkcolor(BACKGROUND_COLOR);
 	setcolor(color);
@@ -168,11 +168,12 @@ int chooseVertex(int highLightColor, int skipReset)
 	int newPos(-1), oldPos(-1);
 	while (1)
 	{
-		if (getKey() == KEY_ESC) break;
+		if (getKey() == KEY_ESC)
+			break;
 		newPos = listv.find(mousex(), mousey());
 		if (newPos != oldPos)
 		{
-			if (newPos != -1 && newPos != skipReset) 
+			if (newPos != -1 && newPos != skipReset)
 				listv.v[newPos]->show(highLightColor);
 			if (oldPos != -1 && oldPos != skipReset)
 				listv.v[oldPos]->show(VERTEX_COLOR2);
@@ -181,7 +182,8 @@ int chooseVertex(int highLightColor, int skipReset)
 		if (ismouseclick(WM_LBUTTONDOWN))
 		{
 			getmouseclick(WM_LBUTTONDOWN, x, y);
-			if (!isInWorkingZone(x, y)) break;
+			if (!isInWorkingZone(x, y))
+				break;
 			if (newPos != -1)
 			{
 				listv.v[newPos]->show(highLightColor);
@@ -198,12 +200,12 @@ bool chooseStartVertex(int &start, const char *text1, const char *text2)
 	setTextPrintStyle(TEXT_COLOR);
 	printText(text1);
 	start = chooseVertex(VERTEX_CHOOSING_COLOR);
-	if (start == -1) return 0;
+	if (start == -1)
+		return 0;
 	setTextPrintStyle(TEXT_COLOR);
 	printText(listv.v[start]->name);
 	printTextWlb(text2);
 	return 1;
-	
 }
 
 bool chooseTwoVertices(int &start, int &stop)
@@ -211,14 +213,16 @@ bool chooseTwoVertices(int &start, int &stop)
 	setTextPrintStyle(TEXT_COLOR);
 	printText("Chon dinh xuat phat: ");
 	start = chooseVertex(VERTEX_CHOOSING_COLOR);
-	if (start == -1) return 0;
+	if (start == -1)
+		return 0;
 	setTextPrintStyle(TEXT_COLOR);
 	printTextWl(listv.v[start]->name);
 	listv.v[start]->show(VERTEX_CHOSE_COLOR);
 	setTextPrintStyle(TEXT_COLOR);
 	printText("Chon dinh ket thuc: ");
 	stop = chooseVertex(VERTEX_CHOOSING_COLOR, start);
-	if (stop == -1) return 0;
+	if (stop == -1)
+		return 0;
 	setTextPrintStyle(TEXT_COLOR);
 	printTextWl(listv.v[stop]->name);
 	listv.v[stop]->show(VERTEX_CHOSE_COLOR);
@@ -229,9 +233,11 @@ bool chooseTwoVertices(int &start, int &stop)
 	}
 	return 1;
 }
- 
-void deleteText(const char* str){
-	if (xCursor <= xCURSOR) return;
+
+void deleteText(const char *str)
+{
+	if (xCursor <= xCURSOR)
+		return;
 	const int currentColor = getcolor();
 	setTextPrintStyle(BACKGROUND_COLOR);
 	const int tw = textwidth(str);
@@ -244,18 +250,32 @@ void deleteText(const char* str){
 bool getInputChar(char *str, int max, bool (*checkKey)(char key))
 {
 	setTextPrintStyle(BLUE);
-	int i = 0; str[0] = '\0';
+	int i = 0;
+	str[0] = '\0';
 	char key[2] = {'\0', '\0'};
 	while (i < max)
 	{
 		if (kbhit())
 		{
 			key[0] = getch();
-			if (key[0] == KEY_ESC || key[0] == KEY_ENTER) break;
-			if (key[0] == KEY_BACKSPACE && i > 0) {--i; key[0] = str[i]; deleteText(key); str[i] = '\0';}
-			else if (checkKey(key[0])) {strcat(str, key); ++i; printText(key);}
+			if (key[0] == KEY_ESC || key[0] == KEY_ENTER)
+				break;
+			if (key[0] == KEY_BACKSPACE && i > 0)
+			{
+				--i;
+				key[0] = str[i];
+				deleteText(key);
+				str[i] = '\0';
+			}
+			else if (checkKey(key[0]))
+			{
+				strcat(str, key);
+				++i;
+				printText(key);
+			}
 		}
-		if (ismouseclick(WM_LBUTTONDOWN)) clearmouseclick(WM_LBUTTONDOWN);
+		if (ismouseclick(WM_LBUTTONDOWN))
+			clearmouseclick(WM_LBUTTONDOWN);
 		delay(DELAY_VALUE);
 	}
 	return (i > 0);
@@ -265,11 +285,13 @@ bool getInputWeight(float &res)
 {
 	char str[10];
 	getInputChar(str, 10, inputFloat);
-	if (!isFloat(str)) return 0;
+	if (!isFloat(str))
+		return 0;
 	res = roundf(toFloat(str) * 100) / 100;
 	if (res > MAX_WEIGHT || res < MIN_WEIGHT)
 	{
-		char msg[70]; char w[10];
+		char msg[70];
+		char w[10];
 		strcpy(msg, "Trong so khong cho phep.\nTrong so >= ");
 		convertToChar(MIN_WEIGHT, w);
 		strcat(msg, w);
@@ -309,7 +331,7 @@ void printTextWlb(Type s)
 	yCursor += TEXTHIGHT;
 	printText(s);
 }
-//Xu ly them, xoa, sua, di chu
+// Xu ly them, xoa, sua, di chu
 void addVertex()
 {
 	drawLimitZone();
@@ -326,14 +348,15 @@ void addVertex()
 	printText("Click chuot de them dinh.");
 	while (listv.num < MAX_VERTEX)
 	{
-		if (getKey() == KEY_ESC) break;
+		if (getKey() == KEY_ESC)
+			break;
 		if (ismouseclick(WM_LBUTTONDOWN))
 		{
 			getmouseclick(WM_LBUTTONDOWN, x, y);
 			if (listv.find(x, y) != -1)
 			{
 				MessageBox(hwnd, "Trung dinh da co\nVui long chon lai.", "Loi",
-							MB_APPLMODAL | MB_ICONERROR);
+						   MB_APPLMODAL | MB_ICONERROR);
 				continue;
 			}
 			if (isInLimitZone(x, y))
@@ -343,7 +366,8 @@ void addVertex()
 				drawMatrixZone();
 				isSaved = 0;
 			}
-			else break;
+			else
+				break;
 		}
 		delay(DELAY_VALUE);
 	}
@@ -351,7 +375,8 @@ void addVertex()
 
 void addEdges()
 {
-	if (isEmptyGraph()) return;
+	if (isEmptyGraph())
+		return;
 	int begin, end, oldEnd = -1;
 	float weight;
 	setTextPrintStyle(TEXT_COLOR);
@@ -359,10 +384,12 @@ void addEdges()
 	while (1)
 	{
 		begin = chooseVertex(VERTEX_CHOOSING_COLOR);
-		if (begin == -1) break;
+		if (begin == -1)
+			break;
 		int x = listv.v[begin]->x;
 		int y = listv.v[begin]->y;
-		if (ismouseclick(WM_LBUTTONUP)) clearmouseclick(WM_LBUTTONUP);
+		if (ismouseclick(WM_LBUTTONUP))
+			clearmouseclick(WM_LBUTTONUP);
 		while (!ismouseclick(WM_LBUTTONUP))
 		{
 			setactivepage(1 - getactivepage());
@@ -381,7 +408,8 @@ void addEdges()
 			if (end != begin && end != -1 && end != oldEnd)
 				listv.v[end]->show(VERTEX_CHOOSING_COLOR);
 			oldEnd = end;
-			if (!isInWorkingZone(mousex(), mousey())) break;
+			if (!isInWorkingZone(mousex(), mousey()))
+				break;
 			delay(DELAY_VALUE);
 		}
 		if (end == -1 || end == begin)
@@ -396,16 +424,18 @@ void addEdges()
 		refreshGraph(ADD_EDGE_MENU);
 		drawEdge(begin, end, EDGE_HIGHTLIGHT_COLOR);
 		setTextPrintStyle(TEXT_COLOR);
-		
+
 		printText("Nhap trong so (xoa cung nhap '-')");
 		printText("cung ");
-		
+
 		printText(listv.v[begin]->name);
 		printText("->");
 		printText(listv.v[end]->name);
 		printText(": ");
-		if (getInputWeight(weight)) adjaGraph[begin][end] = weight;
-		else adjaGraph[begin][end] = NO_EDGE_VALUE;
+		if (getInputWeight(weight))
+			adjaGraph[begin][end] = weight;
+		else
+			adjaGraph[begin][end] = NO_EDGE_VALUE;
 		isSaved = 0;
 		refreshGraph(ADD_EDGE_MENU);
 		listv.v[begin]->show(VERTEX_COLOR);
@@ -415,7 +445,8 @@ void addEdges()
 
 void renameVertex()
 {
-	if (isEmptyGraph()) return;
+	if (isEmptyGraph())
+		return;
 	int choose;
 	while (1)
 	{
@@ -433,10 +464,13 @@ void renameVertex()
 				drawMatrixZone();
 				isSaved = 0;
 			}
-			else MessageBox(hwnd, "Trung ten hoac nhap sai", "Loi", MB_APPLMODAL | MB_ICONERROR);
+			else
+				MessageBox(hwnd, "Trung ten hoac nhap sai", "Loi", MB_APPLMODAL | MB_ICONERROR);
 			listv.v[choose]->show(VERTEX_COLOR2);
 			printTextWl("");
-		} else break;
+		}
+		else
+			break;
 	}
 }
 
@@ -455,7 +489,7 @@ inline void removeCol(int col)
 inline void removeLast()
 {
 	const int &LAST = listv.num - 1;
-	for (int i = 0; i < listv.num; ++i) //Remove last row & last column
+	for (int i = 0; i < listv.num; ++i) // Remove last row & last column
 	{
 		adjaGraph[LAST][i] = NO_EDGE_VALUE;
 		adjaGraph[i][LAST] = NO_EDGE_VALUE;
@@ -470,13 +504,15 @@ void removeVertex(int v)
 
 void deleteVertex()
 {
-	if (isEmptyGraph()) return;
+	if (isEmptyGraph())
+		return;
 	while (listv.num > 0)
 	{
 		setTextPrintStyle(TEXT_COLOR);
 		printText("Chon dinh can xoa: ");
 		int choose = chooseVertex(VERTEX_DELETE_COLOR);
-		if (choose == -1) break;
+		if (choose == -1)
+			break;
 		setTextPrintStyle(VERTEX_DELETE_COLOR);
 		printText(listv.v[choose]->name);
 		removeVertex(choose);
@@ -490,20 +526,23 @@ void deleteVertex()
 
 void moveVertex()
 {
-	if (isEmptyGraph()) return;
+	if (isEmptyGraph())
+		return;
 	int x, y;
 	setTextPrintStyle(TEXT_COLOR);
-	
+
 	printTextWl("Dung thao tac keo/tha dinh de di");
 	printTextWl("chuyen tung dinh ! ");
 	printText("hoac Ctr + keo/tha de di chuyen");
 	printText("toan bo do thi ! ");
-	
+
 	while (1)
 	{
 		int choose = chooseVertex(VERTEX_CHOOSING_COLOR);
-		if  (choose == -1) break;
-		if (ismouseclick(WM_LBUTTONUP)) clearmouseclick(WM_LBUTTONUP);
+		if (choose == -1)
+			break;
+		if (ismouseclick(WM_LBUTTONUP))
+			clearmouseclick(WM_LBUTTONUP);
 		isSaved = 0;
 		listv.v[choose]->show(VERTEX_CHOSE_COLOR);
 		while (!ismouseclick(WM_LBUTTONUP))
@@ -511,7 +550,8 @@ void moveVertex()
 			if (ismouseclick(WM_MOUSEMOVE))
 			{
 				getmouseclick(WM_MOUSEMOVE, x, y);
-				if (!isInLimitZone(x, y)) continue;
+				if (!isInLimitZone(x, y))
+					continue;
 				if (GetKeyState(VK_CONTROL) < 0) // Crt + move all vertices
 				{
 					int dx = x - listv.v[choose]->x;
@@ -530,7 +570,9 @@ void moveVertex()
 							break;
 						}
 					}
-				} else listv.v[choose]->setCoordinate(x, y); // Move single vertex
+				}
+				else
+					listv.v[choose]->setCoordinate(x, y); // Move single vertex
 				setactivepage(1 - getactivepage());
 				initScreen();
 				drawLimitZone();
@@ -549,9 +591,10 @@ void moveVertex()
 
 void cleanGraph()
 {
-	if (isEmptyGraph()) return;
+	if (isEmptyGraph())
+		return;
 	if (MessageBox(hwnd, "Ban co chac khong?", "Xoa do thi",
-		MB_APPLMODAL| MB_ICONQUESTION | MB_YESNO) == IDYES)
+				   MB_APPLMODAL | MB_ICONQUESTION | MB_YESNO) == IDYES)
 	{
 		listv.clear();
 		setMatrixTo(adjaGraph, NO_EDGE_VALUE);
@@ -563,23 +606,23 @@ void cleanGraph()
 void help()
 {
 	MessageBox(hwnd, "Do an do thi nhom 35.\n"
-					"Su dung:\n"
-					"Phim <ESC> : Huy chuc nang.\n"
-					"Phim <Q>/<q> : Thoat chuong trinh.\n"
-					"Phim <LEFT>/<RIGHT> : Chinh toc do giam/tang.\n"
-					"Su dung cac nut de thuc hien thao tac tren man hinh.\n"
-					"\nTac gia:\n"
-					"Tran Minh Hoang\n"
-					"Nguyen Do Tri\n"
-					"Dang Mai Hong An",
-				 	"Help", MB_APPLMODAL | MB_ICONINFORMATION);
+					 "Su dung:\n"
+					 "Phim <ESC> : Huy chuc nang.\n"
+					 "Phim <Q>/<q> : Thoat chuong trinh.\n"
+					 "Phim <LEFT>/<RIGHT> : Chinh toc do giam/tang.\n"
+					 "Su dung cac nut de thuc hien thao tac tren man hinh.\n"
+					 "\nTac gia:\n"
+					 "Tran Minh Hoang\n"
+					 "Nguyen Do Tri\n"
+					 "Dang Mai Hong An",
+			   "Help", MB_APPLMODAL | MB_ICONINFORMATION);
 }
 
 //-------------------------------------------xu ly button menu (file, aglo, quit)
 
 // demo thuat toan -------------------------------------------------------------------------
 
-//void dfs()
+// void dfs()
 //{
 //	if (isEmptyGraph()) return;
 //	int start;
@@ -590,9 +633,9 @@ void help()
 //		dfsTraveler(start);
 //		return backToMenu();
 //	}
-//}
+// }
 //
-//void dfsTraveler(int u)
+// void dfsTraveler(int u)
 //{
 //	stack s;
 //	s.push(u);
@@ -619,9 +662,9 @@ void help()
 //		listv.v[u]->show(VERTEX_VISTED_COLOR);
 //	}
 //	deleteText("->");
-//}
+// }
 //
-//void bfs()
+// void bfs()
 //{
 //	if (isEmptyGraph()) return;
 //	int start;
@@ -632,9 +675,9 @@ void help()
 //		bfsTraveler(start);
 //		return backToMenu();
 //	}
-//}
+// }
 //
-//void bfsTraveler(int u)
+// void bfsTraveler(int u)
 //{
 //	queue q;
 //	q.push(u);
@@ -661,9 +704,9 @@ void help()
 //		listv.v[u]->show(VERTEX_VISTED_COLOR);
 //	}
 //	deleteText("->");
-//}
+// }
 //
-//void shortestWayXY(){
+// void shortestWayXY(){
 //	if (isEmptyGraph()) return;
 //	int start, stop;
 //	if (chooseTwoVertices(start, stop))
@@ -682,20 +725,20 @@ void help()
 //			printTextWl("Khoi chay thuat toan FordBellman: ");
 //			if (!fordbellman(start, stop))
 //				printTextWlb("Do thi ton tai chu trinh am.");
-//		} 
+//		}
 //	}
 //	return backToMenu();
-//}
+// }
 //
-//bool isNegativeWeight()
+// bool isNegativeWeight()
 //{
 //	for (int i = 0; i < listv.num; ++i)
 //		for (int j = 0; j < listv.num; ++j)
 //			if (adjaGraph[i][j] != NO_EDGE_VALUE && adjaGraph[i][j] < 0)
 //				return 1;
 //	return 0;
-//}
-//void dijkstra(int start, int stop)
+// }
+// void dijkstra(int start, int stop)
 //{
 //	const int &NUM = listv.num;
 //	bool free[NUM];
@@ -728,20 +771,20 @@ void help()
 //		}
 //	}
 //	showResultPathXY(dist, start, stop);
-//}
+// }
 //
-//bool isNegativeCycle(double *dist)
+// bool isNegativeCycle(double *dist)
 //{
 //	const int &NUM = listv.num;
 //	for (int i = 0; i < NUM; ++i)
 //		for (int j = 0; j < NUM; ++j)
-//			if (adjaGraph[j][i] != NO_EDGE_VALUE && dist[j] != MAX_EDGE_VALUE 
+//			if (adjaGraph[j][i] != NO_EDGE_VALUE && dist[j] != MAX_EDGE_VALUE
 //				&& dist[i] > dist[j] + adjaGraph[j][i])
 //				return true;
 //	return false;
-//}
+// }
 //
-//bool fordbellman(int start, int stop)
+// bool fordbellman(int start, int stop)
 //{
 //	const int &NUM = listv.num;
 //	double dist[NUM];
@@ -772,7 +815,7 @@ void help()
 //	if (isNegativeCycle(dist)) return false;
 //	showResultPathXY(dist, start, stop);
 //	return true;
-//}
+// }
 
 void showResultStack(stack &s)
 {
@@ -789,7 +832,8 @@ void showResultStack(stack &s)
 		drawEdge(u, v, EDGE_VISTED_COLOR);
 		listv.v[v]->show(VERTEX_VISTED_COLOR);
 		u = v;
-		if (getKey() == KEY_ESC) return;
+		if (getKey() == KEY_ESC)
+			return;
 		delay(delayRunTime);
 	}
 }
@@ -820,14 +864,22 @@ void switchMenuItem(int chose)
 {
 	switch (chose)
 	{
-		case ADD_VERTEX_MENU:	 	return addVertex();
-		case ADD_EDGE_MENU: 		return addEdges();
-		case RENAME_VERTEX_MENU: 	return renameVertex();
-		case DELETEVE_MENU: 		return deleteVertex();
-		case MOVEVE_MENU: 			return moveVertex();
-		case CLEAN_GRAPH_MENU: 		return cleanGraph();
-		case HELP_MENU: 			return help();
-		default: 					return;
+	case ADD_VERTEX_MENU:
+		return addVertex();
+	case ADD_EDGE_MENU:
+		return addEdges();
+	case RENAME_VERTEX_MENU:
+		return renameVertex();
+	case DELETEVE_MENU:
+		return deleteVertex();
+	case MOVEVE_MENU:
+		return moveVertex();
+	case CLEAN_GRAPH_MENU:
+		return cleanGraph();
+	case HELP_MENU:
+		return help();
+	default:
+		return;
 	}
 }
 
@@ -836,15 +888,19 @@ void backToMenu()
 	setTextPrintStyle(TEXT_COLOR);
 	printTextWlb("Nhan phim bat ky hoac click chuot");
 	printTextWlb("de tiep tuc.");
-	if (ismouseclick(WM_LBUTTONDOWN)) clearmouseclick(WM_LBUTTONDOWN);
+	if (ismouseclick(WM_LBUTTONDOWN))
+		clearmouseclick(WM_LBUTTONDOWN);
 	fflush(stdin);
 	while (1)
 	{
-		if (kbhit()) break;
-		if (ismouseclick(WM_LBUTTONDOWN)) break;
+		if (kbhit())
+			break;
+		if (ismouseclick(WM_LBUTTONDOWN))
+			break;
 		delay(DELAY_VALUE);
 	}
-	if (ismouseclick(WM_LBUTTONDOWN)) clearmouseclick(WM_LBUTTONDOWN);
+	if (ismouseclick(WM_LBUTTONDOWN))
+		clearmouseclick(WM_LBUTTONDOWN);
 	fflush(stdin);
 }
 
@@ -860,7 +916,8 @@ void refreshScreen()
 // show button da chon
 inline void showChoseButton(int pos)
 {
-	if (pos >= ADD_VERTEX_MENU) refreshScreen();
+	if (pos >= ADD_VERTEX_MENU)
+		refreshScreen();
 	menuButton[pos].showChoseButton();
 	showButtonIcon(menuButton, pos);
 }
@@ -868,7 +925,7 @@ inline void showChoseButton(int pos)
 // tim kiem button, tra ve i neu tim thay va tra ve -1 neu khong tim thay
 int findButton(int x, int y)
 {
-	for (int i = 0; i < 10 ;++i)
+	for (int i = 0; i < 10; ++i)
 		if (menuButton[i].isButtonClick(x, y))
 			return i;
 	return -1;
@@ -878,13 +935,15 @@ int findButton(int x, int y)
 inline void showHightLightButton(int pos)
 {
 	menuButton[pos].showHightLightButton();
-	if (pos >= ADD_VERTEX_MENU) menuButton[pos].showButtonHint();
+	if (pos >= ADD_VERTEX_MENU)
+		menuButton[pos].showButtonHint();
 	showButtonIcon(menuButton, pos);
 }
 
 inline void showNormalButton(int pos)
 {
-	if (pos >= ADD_VERTEX_MENU) refreshScreen();
+	if (pos >= ADD_VERTEX_MENU)
+		refreshScreen();
 	menuButton[pos].showNormalButton();
 	showButtonIcon(menuButton, pos);
 }
@@ -893,9 +952,11 @@ inline void update(int &oldPos, int &newPos, int x, int y)
 {
 	newPos = findButton(x, y);
 	if (newPos != oldPos)
-	{	
-		if (oldPos != -1) showNormalButton(oldPos);
-		if (newPos != -1) showHightLightButton(newPos);
-		oldPos = newPos;  
+	{
+		if (oldPos != -1)
+			showNormalButton(oldPos);
+		if (newPos != -1)
+			showHightLightButton(newPos);
+		oldPos = newPos;
 	}
 }

@@ -53,7 +53,7 @@ void onTopBarClickListener(int id)
 		break;
 
 	case TOPBAR_HELP:
-		createDialogHelp();
+		help();
 		break;
 
 	case TOPBAR_OUTSIDER:
@@ -96,20 +96,20 @@ void onTopBarClickListener(int id)
 		break;
 
 	case TOPBAR_ALGO_Hamilton:
-	// hamilton()
+		// hamilton()
 		break;
 
 	case TOPBAR_ALGO_Euler:
-	// euler()
+		// euler()
 		break;
 
 	case TOPBAR_ALGO_TopoSort:
-		//			topoSort();
+		topoSort();
 		break;
 
 	case TOPBAR_ALGO_TPLT:
 		SCC();
-	break;
+		break;
 
 	default:
 
