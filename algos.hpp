@@ -2,6 +2,9 @@
 
 #include "list_vertices.hpp"
 #include <cstring>
+#include <vector>
+
+
 #include "colors.hpp"			// Define all colors need
 #include "button.hpp"			// Button structures
 #include "vertex.hpp"			// Vertex structures
@@ -11,13 +14,16 @@
 
 #include "queue.hpp"			// int queue using linked list
 #include "stack.hpp"			// int stack also using linked list
+#include "Graph.hpp"
 
 using namespace std;
 
 void dfs()
 {
 	if (isEmptyGraph()) return;
+	
 	int start;
+	
 	if (chooseStartVertex(start, "Chon dinh bat dau: ", "DFS: "))
 	{
 		setArrayTo(trace, listv.num, 0);
@@ -208,3 +214,7 @@ bool fordbellman(int start, int stop)
 	showResultPathXY(dist, start, stop);
 	return true;
 }
+
+
+
+

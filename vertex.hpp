@@ -7,6 +7,8 @@
 
 struct Vertex
 {
+	int id;
+	
 	int x, y;
 	int color;
 	char name[MAX_NAME_LENGTH];

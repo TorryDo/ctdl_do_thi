@@ -1,5 +1,5 @@
-#ifndef _stack_hpp_
-#define _stack_hpp_
+#ifndef stack_hpp
+#define stack_hpp
 #include "node.hpp"
 #include <limits.h>
 #include <stddef.h>
