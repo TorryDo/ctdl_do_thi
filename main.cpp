@@ -1,4 +1,3 @@
-
 #include <iostream>				// Debug std::cin std::cout
 #include "button.hpp"			// Button structures
 #include "vertex.hpp"			// Vertex structures
@@ -13,7 +12,6 @@
 #include "open_file.hpp"
 #include "save_file.hpp"
 #include "algos.hpp"
-// #include "algo2.hpp"
 #include "graph.hpp"
 
 using namespace std;
@@ -44,12 +42,12 @@ void onTopBarClickListener(int id)
 
 	case TOPBAR_FILE:
 		createDialogFile();
-		addInsideFileButtons();
+		showFileButtons();
 		break;
 
 	case TOPBAR_ALGO:
 		createDialogAlgo();
-		addInsideAlgoButtons();
+		showAlgoButtons();
 		break;
 
 	case TOPBAR_HELP:

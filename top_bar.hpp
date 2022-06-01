@@ -162,60 +162,82 @@ const int TOPBAR_ALGO_TPLT = 17;
 
 int topBarSelection = TOPBAR_UNSELECT;
 
-// button top bar
-TextButton buttonFile = TextButton(BUTTON_FILE_LEFT, TOPBAR_TOP, BUTTON_FILE_RIGHT, TOPBAR_BOTTOM, "FILE", TOPBAR_FILE);
-TextButton buttonAlgo = TextButton(BUTTON_ALGO_LEFT, TOPBAR_TOP, BUTTON_ALGO_RIGHT, TOPBAR_BOTTOM, "ALGORIHM", TOPBAR_ALGO);
-TextButton buttonHelp = TextButton(BUTTON_HELP_LEFT, TOPBAR_TOP, BUTTON_HELP_RIGHT, TOPBAR_BOTTOM, "HELP", TOPBAR_HELP);
-// inside file menu
-TextButton buttonOpenFile = TextButton(BUTTON_OPEN_FILE_LEFT, BUTTON_OPEN_FILE_TOP, BUTTON_OPEN_FILE_RIGHT, BUTTON_OPEN_FILE_BOTTOM, "OPEN FILE", TOPBAR_OPEN_FILE);
-TextButton buttonSaveFile = TextButton(BUTTON_SAVE_FILE_LEFT, BUTTON_SAVE_FILE_TOP, BUTTON_SAVE_FILE_RIGHT, BUTTON_SAVE_FILE_BOTTOM, "SAVE FILE", TOPBAR_SAVE_FILE);
-TextButton buttonCloseFile = TextButton(BUTTON_CLOSE_FILE_LEFT, BUTTON_CLOSE_FILE_TOP, BUTTON_CLOSE_FILE_RIGHT, BUTTON_CLOSE_FILE_BOTTOM, "CLOSE FILE", TOPBAR_CLOSE_FILE);
-// inside algo menu
-TextButton buttonDFS = TextButton(BUTTON_DFS_LEFT, BUTTON_DFS_TOP, BUTTON_DFS_RIGHT, BUTTON_DFS_BOTTOM, "DFS", TOPBAR_ALGO_DFS);
-TextButton buttonBFS = TextButton(BUTTON_BFS_LEFT, BUTTON_BFS_TOP, BUTTON_BFS_RIGHT, BUTTON_BFS_BOTTOM, "BFS", TOPBAR_ALGO_BFS);
-TextButton buttonXtoY = TextButton(BUTTON_XtoY_LEFT, BUTTON_XtoY_TOP, BUTTON_XtoY_RIGHT, BUTTON_XtoY_BOTTOM, "X to Y", TOPBAR_ALGO_XtoY);
-TextButton buttonDinhTru = TextButton(BUTTON_DinhTru_LEFT, BUTTON_DinhTru_TOP, BUTTON_DinhTru_RIGHT, BUTTON_DinhTru_BOTTOM, "Dinh Tru", TOPBAR_ALGO_DinhTru);
-TextButton buttonDinhThat = TextButton(BUTTON_DinhThat_LEFT, BUTTON_DinhThat_TOP, BUTTON_DinhThat_RIGHT, BUTTON_DinhThat_BOTTOM, "Dinh That", TOPBAR_ALGO_DinhThat);
-TextButton buttonCanhCau = TextButton(BUTTON_CanhCau_LEFT, BUTTON_CanhCau_TOP, BUTTON_CanhCau_RIGHT, BUTTON_CanhCau_BOTTOM, "Canh Cau", TOPBAR_ALGO_CanhCau);
-TextButton buttonHamilton = TextButton(BUTTON_Hamilton_LEFT, BUTTON_Hamilton_TOP, BUTTON_Hamilton_RIGHT, BUTTON_Hamilton_BOTTOM, "Hamilton", TOPBAR_ALGO_Hamilton);
-TextButton buttonEuler = TextButton(BUTTON_Euler_LEFT, BUTTON_Euler_TOP, BUTTON_Euler_RIGHT, BUTTON_Euler_BOTTOM, "Euler", TOPBAR_ALGO_Euler);
-TextButton buttonTopoSort = TextButton(BUTTON_TopoSort_LEFT, BUTTON_TopoSort_TOP, BUTTON_TopoSort_RIGHT, BUTTON_TopoSort_BOTTOM, "TopoSort", TOPBAR_ALGO_TopoSort);
-TextButton buttonTPLT = TextButton(BUTTON_TPLT_LEFT, BUTTON_TPLT_TOP, BUTTON_TPLT_RIGHT, BUTTON_TPLT_BOTTOM, "TPLT", TOPBAR_ALGO_TPLT);
+vector<TextButton> topBarButtons = {
+	TextButton(BUTTON_FILE_LEFT, TOPBAR_TOP, BUTTON_FILE_RIGHT, TOPBAR_BOTTOM, "FILE", TOPBAR_FILE),
+	TextButton(BUTTON_ALGO_LEFT, TOPBAR_TOP, BUTTON_ALGO_RIGHT, TOPBAR_BOTTOM, "ALGORITHM", TOPBAR_ALGO),
+	TextButton(BUTTON_HELP_LEFT, TOPBAR_TOP, BUTTON_HELP_RIGHT, TOPBAR_BOTTOM, "HELP", TOPBAR_HELP),
+};
+
+vector<TextButton> fileButtons = {
+	TextButton(BUTTON_OPEN_FILE_LEFT, BUTTON_OPEN_FILE_TOP, BUTTON_OPEN_FILE_RIGHT, BUTTON_OPEN_FILE_BOTTOM, "OPEN FILE", TOPBAR_OPEN_FILE),
+	TextButton(BUTTON_SAVE_FILE_LEFT, BUTTON_SAVE_FILE_TOP, BUTTON_SAVE_FILE_RIGHT, BUTTON_SAVE_FILE_BOTTOM, "SAVE FILE", TOPBAR_SAVE_FILE),
+	TextButton(BUTTON_CLOSE_FILE_LEFT, BUTTON_CLOSE_FILE_TOP, BUTTON_CLOSE_FILE_RIGHT, BUTTON_CLOSE_FILE_BOTTOM, "CLOSE FILE", TOPBAR_CLOSE_FILE),
+};
+
+vector<TextButton> algoButtons = {
+	TextButton(BUTTON_DFS_LEFT, BUTTON_DFS_TOP, BUTTON_DFS_RIGHT, BUTTON_DFS_BOTTOM, "DFS", TOPBAR_ALGO_DFS),
+	TextButton(BUTTON_BFS_LEFT, BUTTON_BFS_TOP, BUTTON_BFS_RIGHT, BUTTON_BFS_BOTTOM, "BFS", TOPBAR_ALGO_BFS),
+	TextButton(BUTTON_XtoY_LEFT, BUTTON_XtoY_TOP, BUTTON_XtoY_RIGHT, BUTTON_XtoY_BOTTOM, "X to Y", TOPBAR_ALGO_XtoY),
+	TextButton(BUTTON_DinhTru_LEFT, BUTTON_DinhTru_TOP, BUTTON_DinhTru_RIGHT, BUTTON_DinhTru_BOTTOM, "Dinh Tru", TOPBAR_ALGO_DinhTru),
+	TextButton(BUTTON_DinhThat_LEFT, BUTTON_DinhThat_TOP, BUTTON_DinhThat_RIGHT, BUTTON_DinhThat_BOTTOM, "Dinh That", TOPBAR_ALGO_DinhThat),
+	TextButton(BUTTON_CanhCau_LEFT, BUTTON_CanhCau_TOP, BUTTON_CanhCau_RIGHT, BUTTON_CanhCau_BOTTOM, "Canh Cau", TOPBAR_ALGO_CanhCau),
+	TextButton(BUTTON_Hamilton_LEFT, BUTTON_Hamilton_TOP, BUTTON_Hamilton_RIGHT, BUTTON_Hamilton_BOTTOM, "Hamilton", TOPBAR_ALGO_Hamilton),
+	TextButton(BUTTON_Euler_LEFT, BUTTON_Euler_TOP, BUTTON_Euler_RIGHT, BUTTON_Euler_BOTTOM, "Euler", TOPBAR_ALGO_Euler),
+	TextButton(BUTTON_TopoSort_LEFT, BUTTON_TopoSort_TOP, BUTTON_TopoSort_RIGHT, BUTTON_TopoSort_BOTTOM, "TopoSort", TOPBAR_ALGO_TopoSort),
+	TextButton(BUTTON_TPLT_LEFT, BUTTON_TPLT_TOP, BUTTON_TPLT_RIGHT, BUTTON_TPLT_BOTTOM, "TPLT", TOPBAR_ALGO_TPLT),
+};
 
 // inside help menu
 
 vector<TextButton> buttonList;
 
-bool canListenTopBarInput = true;
+void showTopBarButtons()
+{
+	buttonList.clear();
+	for (auto topBarButton : topBarButtons)
+	{
+		topBarButton.setBackgroundColor(TOP_BAR_COLOR);
+		topBarButton.setHighLightColor(HIGHLIGHT_TEXT_COLOR);
+		topBarButton.setTextColor(TOP_BAR_TEXT_COLOR);
+		topBarButton.show();
+	}
+	buttonList.insert(buttonList.end(), topBarButtons.begin(), topBarButtons.end());
+}
+void showFileButtons()
+{
+	showTopBarButtons();
 
-thread thr;
+	for (auto fileButton : fileButtons)
+	{
+		fileButton.setBackgroundColor(TOP_BAR_ITEM_BUTTON_COLOR);
+		fileButton.setHighLightColor(RED);
+		fileButton.setTextColor(WHITE);
+		fileButton.show();
+	}
+	buttonList.insert(buttonList.end(), fileButtons.begin(), fileButtons.end());
+}
+void showAlgoButtons()
+{
+	showTopBarButtons();
 
-// code ------------------------------------------------------------------------------
+	for (auto algoButton : algoButtons)
+	{
+		algoButton.setBackgroundColor(TOP_BAR_ITEM_BUTTON_COLOR);
+		algoButton.setHighLightColor(RED);
+		algoButton.setTextColor(WHITE);
+		algoButton.show();
+	}
+	buttonList.insert(buttonList.end(), algoButtons.begin(), algoButtons.end());
+}
+
+// logic ------------------------------------------------------------------------------
 
 void drawTopBar()
 {
 	setfillstyle(SOLID_FILL, TOP_BAR_COLOR);
 	bar(TOPBAR_LEFT, TOPBAR_TOP, TOPBAR_RIGHT, TOPBAR_BOTTOM);
 
-	buttonList.clear();
-	buttonList.push_back(buttonFile);
-	buttonList.push_back(buttonAlgo);
-	buttonList.push_back(buttonHelp);
-
-	for (int i = 0; i < 3; i++)
-	{
-		buttonList[i].setBackgroundColor(TOP_BAR_COLOR);
-		buttonList[i].setHighLightColor(HIGHLIGHT_TEXT_COLOR);
-		buttonList[i].setTextColor(TOP_BAR_TEXT_COLOR);
-		buttonList[i].show();
-	}
-}
-
-// listen mouse click
-void closePreviousThread()
-{
-	canListenTopBarInput = false;
-	canListenTopBarInput = true;
+	showTopBarButtons();
 }
 
 bool onMouseClickInTopBar(int x, int y, void (*listener)(int))
@@ -233,16 +255,15 @@ int findSelectedButton(int x, int y)
 	{
 		if (buttonList[i].isButtonClicked(x, y))
 		{
-			//			cout << "selected button = " << i << endl;
 			return i;
 		}
 	}
+
 	return -1;
 }
 
 int onMouseClickInTopBar(int x, int y)
 {
-
 	int buttonPosition = findSelectedButton(x, y);
 
 	drawTopBar();
@@ -271,49 +292,11 @@ int onMouseClickInTopBar(int x, int y)
 	return buttonList[buttonPosition].getID();
 }
 
-void addInsideFileButtons()
-{
-
-	buttonList.push_back(buttonOpenFile);
-	buttonList.push_back(buttonSaveFile);
-	buttonList.push_back(buttonCloseFile);
-
-	for (int i = 3; i < buttonList.size(); i++)
-	{
-		buttonList[i].setBackgroundColor(TOP_BAR_ITEM_BUTTON_COLOR);
-		buttonList[i].setHighLightColor(RED);
-		buttonList[i].setTextColor(WHITE);
-		buttonList[i].show();
-	}
-}
-
 void removeInsideFileButtons()
 {
 	for (int i = 3; i < buttonList.size(); i++)
 	{
 		buttonList.pop_back();
-	}
-}
-
-void addInsideAlgoButtons()
-{
-	buttonList.push_back(buttonDFS);
-	buttonList.push_back(buttonBFS);
-	buttonList.push_back(buttonXtoY);
-	buttonList.push_back(buttonDinhTru);
-	buttonList.push_back(buttonDinhThat);
-	buttonList.push_back(buttonCanhCau);
-	buttonList.push_back(buttonHamilton);
-	buttonList.push_back(buttonEuler);
-	buttonList.push_back(buttonTopoSort);
-	buttonList.push_back(buttonTPLT);
-
-	for (int i = 3; i < buttonList.size(); i++)
-	{
-		buttonList[i].setBackgroundColor(TOP_BAR_ITEM_BUTTON_COLOR);
-		buttonList[i].setHighLightColor(RED);
-		buttonList[i].setTextColor(WHITE);
-		buttonList[i].show();
 	}
 }
 
@@ -325,7 +308,7 @@ void removeInsideAlgoButtons()
 	}
 }
 
-// child
+// ------------------------------------
 void createDialogFile()
 {
 	setfillstyle(SOLID_FILL, TOP_BAR_COLOR);
