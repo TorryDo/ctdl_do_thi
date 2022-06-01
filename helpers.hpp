@@ -8,6 +8,7 @@
 #include"colors.hpp"
 #define _USE_MATH_DEFINES
 #include <cmath>
+
 inline bool isInWorkingZone(int x, int y)
 {	
 	return (x > wbLEFT && x < wRIGHT && y > wTOP && y < aBOTTOM);

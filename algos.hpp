@@ -13,7 +13,6 @@
 
 #include "queue.hpp" // int queue using linked list
 #include "stack.hpp" // int stack also using linked list
-#include "Graph.hpp"
 
 using namespace std;
 
@@ -21,6 +20,11 @@ void SCC();
 void tarjanResult(stack &s, int stop, int components);
 void tarjanVisit(int u, int *disc, int *low, stack &s, int &count, int &components, bool callTarjanResult);
 int tarjanAlgo(bool showResult, int remove);
+void dfsTraveler(int u);
+void bfsTraveler(int u);
+void dijkstra(int start, int stop);
+bool fordbellman(int start, int stop);
+void showResultPathXY(double dist[], int start, int stop);
 
 void dfs()
 {

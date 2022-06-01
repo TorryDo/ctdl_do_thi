@@ -1,6 +1,5 @@
 #pragma once
 
-#include <thread>
 #include <vector>
 #include "drawAll.hpp"
 #include "text_button.hpp"

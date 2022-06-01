@@ -17,7 +17,7 @@ struct queue
 	}
 	void push(int value)
 	{
-		node *n = new node(value); //createNode(value);
+		node *n = new node(value); // createNode(value);
 		if (front == NULL)
 			front = rear = n;
 		else
@@ -28,7 +28,8 @@ struct queue
 	}
 	int pop()
 	{
-		if (front == NULL) return INT_MIN;
+		if (front == NULL)
+			return INT_MIN;
 		node *tmp = front;
 		int res = front->value;
 		front = front->next;
@@ -45,8 +46,10 @@ struct queue
 			delete tmp;
 		}
 	}
+
 private:
 	node *front;
 	node *rear;
 };
+
 #endif

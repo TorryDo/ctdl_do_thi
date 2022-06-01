@@ -1,4 +1,5 @@
 #pragma once
+
 #include <cstring>
 #include <cmath>
 #include "graphics.h"
@@ -7,22 +8,20 @@
 
 struct Vertex
 {
-	int id;
-	
 	int x, y;
 	int color;
 	char name[MAX_NAME_LENGTH];
-	
+
 	Vertex();
-	void create(int , int , char const*);
-	void setColor(int );
-	void setCoordinate(int , int );
-	void showName(int ) const;
+	void create(int, int, char const *);
+	void setColor(int);
+	void setCoordinate(int, int);
+	void showName(int) const;
 	void clearName();
-	void show() const; //Show with current this->color
-	void show(int ); //Show with custom color
+	void show() const; // Show with current this->color
+	void show(int);	   // Show with custom color
 	void showActive(bool);
-	bool isVertexClick(int , int ) const;
+	bool isVertexClick(int, int) const;
 };
 
 Vertex::Vertex()
@@ -32,7 +31,8 @@ Vertex::Vertex()
 }
 void Vertex::create(int x, int y, char const *name)
 {
-	this->x = x; this->y = y;
+	this->x = x;
+	this->y = y;
 	strcpy(this->name, name);
 }
 void Vertex::show() const
@@ -86,5 +86,4 @@ inline void Vertex::setCoordinate(int x, int y)
 inline bool Vertex::isVertexClick(int x, int y) const
 {
 	return (pow(this->x - x, 2) + pow(this->y - y, 2) <= RADIUS_VALUE * RADIUS_VALUE);
-} 
-
+}

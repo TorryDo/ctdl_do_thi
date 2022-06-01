@@ -9,7 +9,6 @@
 #include <limits.h>
 #include <stddef.h>
 #include <sstream>
-//#define WINBGI_H
 
 using namespace std;
 

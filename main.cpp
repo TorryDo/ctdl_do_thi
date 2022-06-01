@@ -1,4 +1,4 @@
-#include <iostream>				// Debug std::cin std::cout
+
 #include "button.hpp"			// Button structures
 #include "vertex.hpp"			// Vertex structures
 #include "list_vertices.hpp"	// Manage all vertices
@@ -8,11 +8,9 @@
 #include "drawAll.hpp"
 #include "func.hpp"
 #include "top_bar.hpp"
-#include <thread>
 #include "open_file.hpp"
 #include "save_file.hpp"
 #include "algos.hpp"
-#include "graph.hpp"
 
 using namespace std;
 
@@ -123,6 +121,7 @@ void listenMouseEvent()
 	{
 		if (ismouseclick(WM_MOUSEMOVE)) // bat sk khi di chuyen chuot
 		{
+			// onMouseHoverInTopBar(x, y);
 			getmouseclick(WM_MOUSEMOVE, x, y);
 			update(oldPos, newPos, x, y);
 		}
@@ -130,9 +129,7 @@ void listenMouseEvent()
 		{
 			clearmouseclick(WM_LBUTTONDOWN);
 
-			bool c = onMouseClickInTopBar(x, y, onTopBarClickListener);
-
-			if (c)
+			if (onMouseClickInTopBar(x, y, onTopBarClickListener))
 				continue;
 
 			onMouseClick(&newPos, &oldPos);
@@ -143,7 +140,6 @@ void listenMouseEvent()
 
 void onMouseClick(int *newPos, int *oldPos)
 {
-
 	clearmouseclick(WM_LBUTTONDOWN);
 	if (*newPos != -1)
 	{
