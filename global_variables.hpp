@@ -3,12 +3,13 @@
 #include "button.hpp"
 
 ListVertices listv;						 // List vertices
+int trace[MAX_VERTEX];					 // visited & save path...
+float adjaGraph[MAX_VERTEX][MAX_VERTEX]; // Adjacency Matrix
+
 int xCursor = xCURSOR;					 // For printText()
 int yCursor = yCURSOR;					 // For printText()
 int delayRunTime = 500;					 // 500ms delay default
 bool isSaved = 1;						 // Check if Graph is saved or not
-int trace[MAX_VERTEX];					 // visited & save path...
-float adjaGraph[MAX_VERTEX][MAX_VERTEX]; // Adjacency Matrix
 
 HWND hwnd; // Manage win32 api functions
 

@@ -14,12 +14,15 @@ using namespace std;
 
 const char DIALOG_WARN_OPEN_FILE[] = " workspace dang mo \n ban co muon mo file moi khong";
 
+bool isConfirmed()
+{
+    return MessageBox(GetActiveWindow(), DIALOG_WARN_OPEN_FILE, "Thong bao", MB_APPLMODAL | MB_ICONWARNING | MB_YESNO) == IDNO;
+}
+
 void openFile(ListVertices *listv)
 {
 
-    if (
-        !listv->isEmpty() &&
-        MessageBox(GetActiveWindow(), DIALOG_WARN_OPEN_FILE, "Thong bao", MB_APPLMODAL | MB_ICONWARNING | MB_YESNO) == IDNO)
+    if (!listv->isEmpty() && isConfirmed())
         return;
 
     OPENFILENAME file;
@@ -84,6 +87,6 @@ void openFile(ListVertices *listv)
     {
         listv->clear();
         setMatrixTo(adjaGraph, NO_EDGE_VALUE); // Clear maxtix
-        MessageBox(GetActiveWindow(), "LOI DOC FILE!!!", "Loi", MB_APPLMODAL | MB_ICONERROR);
+        MessageBox(GetActiveWindow(), "LOI DOC FILE!", "Loi", MB_APPLMODAL | MB_ICONERROR);
     }
 }

@@ -150,6 +150,7 @@ bool isNegativeWeight()
 				return 1;
 	return 0;
 }
+
 void dijkstra(int start, int stop)
 {
 	const int &NUM = listv.num;

@@ -121,7 +121,8 @@ void listenMouseEvent()
 	{
 		if (ismouseclick(WM_MOUSEMOVE)) // bat sk khi di chuyen chuot
 		{
-			// onMouseHoverInTopBar(x, y);
+			checkIfMouseHoverInTopBar(x, y);
+
 			getmouseclick(WM_MOUSEMOVE, x, y);
 			update(oldPos, newPos, x, y);
 		}

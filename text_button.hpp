@@ -112,4 +112,12 @@ public:
 		buildFrame();
 		buildTitle();
 	}
+
+	void showHighLight()
+	{
+		this->color = this->highLightColor;
+
+		buildFrame();
+		buildTitle();
+	}
 };

@@ -8,6 +8,7 @@
 const int TOP_BAR_COLOR = COLOR(75, 123, 229);
 const int TOP_BAR_TEXT_COLOR = WHITE;
 const int TOP_BAR_ITEM_BUTTON_COLOR = COLOR(113, 157, 255);
+const int TOP_BAR_BUTTON_HIGHLIGHT_COLOR = COLOR(71, 96, 114);
 const int HIGHLIGHT_TEXT_COLOR = YELLOW;
 
 using namespace std;
@@ -193,40 +194,40 @@ vector<TextButton> buttonList;
 void showTopBarButtons()
 {
 	buttonList.clear();
-	for (auto topBarButton : topBarButtons)
-	{
-		topBarButton.setBackgroundColor(TOP_BAR_COLOR);
-		topBarButton.setHighLightColor(HIGHLIGHT_TEXT_COLOR);
-		topBarButton.setTextColor(TOP_BAR_TEXT_COLOR);
-		topBarButton.show();
-	}
 	buttonList.insert(buttonList.end(), topBarButtons.begin(), topBarButtons.end());
+	for (int i = 0; i < buttonList.size(); i++)
+	{
+		buttonList[i].setBackgroundColor(TOP_BAR_COLOR);
+		buttonList[i].setHighLightColor(TOP_BAR_BUTTON_HIGHLIGHT_COLOR);
+		buttonList[i].setTextColor(TOP_BAR_TEXT_COLOR);
+		buttonList[i].show();
+	}
 }
 void showFileButtons()
 {
 	showTopBarButtons();
 
-	for (auto fileButton : fileButtons)
-	{
-		fileButton.setBackgroundColor(TOP_BAR_ITEM_BUTTON_COLOR);
-		fileButton.setHighLightColor(RED);
-		fileButton.setTextColor(WHITE);
-		fileButton.show();
-	}
 	buttonList.insert(buttonList.end(), fileButtons.begin(), fileButtons.end());
+	for (int i = 3; i < buttonList.size(); i++)
+	{
+		buttonList[i].setBackgroundColor(TOP_BAR_ITEM_BUTTON_COLOR);
+		buttonList[i].setHighLightColor(TOP_BAR_BUTTON_HIGHLIGHT_COLOR);
+		buttonList[i].setTextColor(TOP_BAR_TEXT_COLOR);
+		buttonList[i].show();
+	}
 }
 void showAlgoButtons()
 {
 	showTopBarButtons();
 
-	for (auto algoButton : algoButtons)
-	{
-		algoButton.setBackgroundColor(TOP_BAR_ITEM_BUTTON_COLOR);
-		algoButton.setHighLightColor(RED);
-		algoButton.setTextColor(WHITE);
-		algoButton.show();
-	}
 	buttonList.insert(buttonList.end(), algoButtons.begin(), algoButtons.end());
+	for (int i = 3; i < buttonList.size(); i++)
+	{
+		buttonList[i].setBackgroundColor(TOP_BAR_ITEM_BUTTON_COLOR);
+		buttonList[i].setHighLightColor(TOP_BAR_BUTTON_HIGHLIGHT_COLOR);
+		buttonList[i].setTextColor(TOP_BAR_TEXT_COLOR);
+		buttonList[i].show();
+	}
 }
 
 // logic ------------------------------------------------------------------------------
@@ -237,6 +238,21 @@ void drawTopBar()
 	bar(TOPBAR_LEFT, TOPBAR_TOP, TOPBAR_RIGHT, TOPBAR_BOTTOM);
 
 	showTopBarButtons();
+}
+
+bool checkIfMouseHoverInTopBar(int x, int y)
+{
+	int buttonPosition = findSelectedButton(x, y);
+
+	for (auto button : buttonList)
+		button.show();
+
+	if (buttonPosition >= 0)
+	{
+		buttonList[buttonPosition].showHighLight();
+	}
+
+	return buttonPosition >= 0;
 }
 
 bool onMouseClickInTopBar(int x, int y, void (*listener)(int))

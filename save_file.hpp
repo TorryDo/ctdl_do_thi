@@ -32,7 +32,6 @@ void saveFile(ListVertices *listv)
 
 	if (GetSaveFileName(&file) == 1)
 	{
-
 		if (!strstr(fileName, ".graph"))
 		{
 			strcat(fileName, ".graph"); // Add file name extension if it isn't exist, but be aware !!!
