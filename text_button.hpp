@@ -42,6 +42,19 @@ private:
 		}
 	}
 
+	// void buildHighLightFrame()
+	// {
+	// 	setcolor(this->borderColor);
+	// 	setfillstyle(SOLID_FILL, this->highLightColor);
+	// 	bar(left, top, right, bottom);
+
+	// 	if (borderWidth > 0)
+	// 	{
+	// 		setlinestyle(SOLID_LINE, 1, this->borderWidth); // ?, ?, borderWidth
+	// 		rectangle(left, top, right, bottom);
+	// 	}
+	// }
+
 public:
 	TextButton(int left, int top, int right, int bottom, char *title, int id)
 	{
@@ -108,6 +121,13 @@ public:
 	{
 		this->color = this->backgroundColor;
 
+		buildFrame();
+		buildTitle();
+	}
+
+	void showHighLight()
+	{
+		this->color = this->highLightColor;
 		buildFrame();
 		buildTitle();
 	}

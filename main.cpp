@@ -1,4 +1,3 @@
-
 #include <iostream>				// Debug std::cin std::cout
 #include "button.hpp"			// Button structures
 #include "vertex.hpp"			// Vertex structures
@@ -13,7 +12,6 @@
 #include "open_file.hpp"
 #include "save_file.hpp"
 #include "algos.hpp"
-// #include "algo2.hpp"
 #include "graph.hpp"
 
 using namespace std;
@@ -125,6 +123,7 @@ void listenMouseEvent()
 	{
 		if (ismouseclick(WM_MOUSEMOVE)) // bat sk khi di chuyen chuot
 		{
+			onMouseHoverInTopBar(x, y);
 			getmouseclick(WM_MOUSEMOVE, x, y);
 			update(oldPos, newPos, x, y);
 		}

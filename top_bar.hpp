@@ -7,9 +7,10 @@
 #define COLOR(r, g, b) (0x04000000 | RGB(r, g, b))
 
 const int TOP_BAR_COLOR = COLOR(75, 123, 229);
+const int TOP_BAR_HIGHLIGHT_COLOR = COLOR(113, 157, 255);
 const int TOP_BAR_TEXT_COLOR = WHITE;
 const int TOP_BAR_ITEM_BUTTON_COLOR = COLOR(113, 157, 255);
-const int HIGHLIGHT_TEXT_COLOR = YELLOW;
+// const int HIGHLIGHT_TEXT_COLOR = YELLOW;
 
 using namespace std;
 
@@ -205,7 +206,7 @@ void drawTopBar()
 	for (int i = 0; i < 3; i++)
 	{
 		buttonList[i].setBackgroundColor(TOP_BAR_COLOR);
-		buttonList[i].setHighLightColor(HIGHLIGHT_TEXT_COLOR);
+		buttonList[i].setHighLightColor(TOP_BAR_HIGHLIGHT_COLOR);
 		buttonList[i].setTextColor(TOP_BAR_TEXT_COLOR);
 		buttonList[i].show();
 	}
@@ -216,6 +217,28 @@ void closePreviousThread()
 {
 	canListenTopBarInput = false;
 	canListenTopBarInput = true;
+}
+
+void onMouseHoverInTopBar(int x, int y)
+{
+	int buttonPosition = findSelectedButton(x, y);
+
+	if (buttonPosition >= 0)
+	{
+
+		for (int i = 0; i < buttonList.size(); i++)
+		{
+			buttonList[i].show();
+		}
+		buttonList[buttonPosition].showHighLight();
+	}
+	else
+	{
+		for (int i = 0; i < buttonList.size(); i++)
+		{
+			buttonList[i].show();
+		}
+	}
 }
 
 bool onMouseClickInTopBar(int x, int y, void (*listener)(int))
@@ -242,7 +265,6 @@ int findSelectedButton(int x, int y)
 
 int onMouseClickInTopBar(int x, int y)
 {
-
 	int buttonPosition = findSelectedButton(x, y);
 
 	drawTopBar();
@@ -273,7 +295,6 @@ int onMouseClickInTopBar(int x, int y)
 
 void addInsideFileButtons()
 {
-
 	buttonList.push_back(buttonOpenFile);
 	buttonList.push_back(buttonSaveFile);
 	buttonList.push_back(buttonCloseFile);
@@ -281,8 +302,8 @@ void addInsideFileButtons()
 	for (int i = 3; i < buttonList.size(); i++)
 	{
 		buttonList[i].setBackgroundColor(TOP_BAR_ITEM_BUTTON_COLOR);
-		buttonList[i].setHighLightColor(RED);
-		buttonList[i].setTextColor(WHITE);
+		buttonList[i].setHighLightColor(TOP_BAR_COLOR);
+		buttonList[i].setTextColor(TOP_BAR_TEXT_COLOR);
 		buttonList[i].show();
 	}
 }
@@ -311,8 +332,8 @@ void addInsideAlgoButtons()
 	for (int i = 3; i < buttonList.size(); i++)
 	{
 		buttonList[i].setBackgroundColor(TOP_BAR_ITEM_BUTTON_COLOR);
-		buttonList[i].setHighLightColor(RED);
-		buttonList[i].setTextColor(WHITE);
+		buttonList[i].setHighLightColor(TOP_BAR_COLOR);
+		buttonList[i].setTextColor(TOP_BAR_TEXT_COLOR);
 		buttonList[i].show();
 	}
 }
