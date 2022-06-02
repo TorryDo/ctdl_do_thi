@@ -28,7 +28,7 @@ void openFile(ListVertices *listv)
     OPENFILENAME file;
     char fileName[MAX_PATH] = "\0";
 
-    ZeroMemory(&file, sizeof(file));
+    SecureZeroMemory(&file, sizeof(file));
     file.lStructSize = sizeof(file);
     file.lpstrFile = fileName;
     file.nMaxFile = sizeof(fileName);
@@ -40,23 +40,18 @@ void openFile(ListVertices *listv)
 
     if (GetOpenFileName(&file))
     {
-        while (ismouseclick(WM_LBUTTONDOWN))
-        {
-            clearmouseclick(WM_LBUTTONDOWN);
-        }
-        ifstream openFile(fileName);
+        ifstream inputFileStream(fileName);
         int num;
-        if ((openFile >> num) && openFile.good())
+        if ((inputFileStream >> num) && inputFileStream.good())
         {
-
             listv->clear();
-            setMatrixTo(adjaGraph, NO_EDGE_VALUE); // Clear maxtix
+            setMatrixTo(weightMatrix, NO_EDGE_VALUE); // Clear maxtix
             char tmpName[MAX_NAME_LENGTH];
             int x, y;
             float weight;
             for (int i = 0; i < num && !error; ++i)
             {
-                if (!(openFile >> tmpName >> x >> y))
+                if (!(inputFileStream >> tmpName >> x >> y))
                 {
                     error = 1;
                 }
@@ -68,12 +63,17 @@ void openFile(ListVertices *listv)
 
             if (!error)
             {
-                while (!openFile.eof())
+                while (!inputFileStream.eof())
                 {
-                    if (!(openFile >> x >> y >> weight))
+                    if (!(inputFileStream >> x >> y >> weight))
+                    {
                         break;
+                    }
+
                     else
-                        adjaGraph[x][y] = weight;
+                    {
+                        weightMatrix[x][y] = weight;
+                    }
                 }
             }
 
@@ -81,12 +81,12 @@ void openFile(ListVertices *listv)
         }
         else
             error = 1;
-        openFile.close();
+        inputFileStream.close();
     }
     if (error)
     {
         listv->clear();
-        setMatrixTo(adjaGraph, NO_EDGE_VALUE); // Clear maxtix
+        setMatrixTo(weightMatrix, NO_EDGE_VALUE); // Clear maxtix
         MessageBox(GetActiveWindow(), "LOI DOC FILE!", "Loi", MB_APPLMODAL | MB_ICONERROR);
     }
 }

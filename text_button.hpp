@@ -107,6 +107,8 @@ public:
 
 	void show()
 	{
+		if (this->color == this->backgroundColor)
+			return;
 		this->color = this->backgroundColor;
 
 		buildFrame();

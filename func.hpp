@@ -1,17 +1,15 @@
 #pragma once
 
 #include <cstring>
-#include "colors.hpp"			// Define all colors need
-#include "button.hpp"			// Button structures
-#include "vertex.hpp"			// Vertex structures
-#include "list_vertices.hpp"	// Manage all vertices
-#include "helpers.hpp"			// Basic functions & draw edges
-#include "constants.hpp"		// All constants go here
+#include "colors.hpp"		 // Define all colors need
+#include "button.hpp"		 // Button structures
+#include "vertex.hpp"		 // Vertex structures
+#include "list_vertices.hpp" // Manage all vertices
+#include "helpers.hpp"		 // Basic functions & draw edges
+#include "constants.hpp"	 // All constants go here
 
 #include "queue.hpp" // int queue using linked list
 #include "stack.hpp" // int stack also using linked list
-
-
 
 //----------------------------BUTTON EDIT-------------------------
 void addVertex();
@@ -121,17 +119,17 @@ void drawEdge(int begin, int end, int color)
 	const int &y1 = listv.v[begin]->y;
 	const int &x2 = listv.v[end]->x;
 	const int &y2 = listv.v[end]->y;
-	if (adjaGraph[end][begin] == NO_EDGE_VALUE || begin < end)
-		drawArrow(x1, y1, x2, y2, color, adjaGraph[begin][end]);
+	if (weightMatrix[end][begin] == NO_EDGE_VALUE || begin < end)
+		drawArrow(x1, y1, x2, y2, color, weightMatrix[begin][end]);
 	else
-		drawCurvedLine(x1, y1, x2, y2, color, adjaGraph[begin][end]);
+		drawCurvedLine(x1, y1, x2, y2, color, weightMatrix[begin][end]);
 }
 
 void drawAllEdges()
 {
 	for (int i = 0; i < listv.num; ++i)
 		for (int j = 0; j < listv.num; ++j)
-			if (adjaGraph[i][j] != NO_EDGE_VALUE)
+			if (weightMatrix[i][j] != NO_EDGE_VALUE)
 				drawEdge(i, j, EDGE_COLOR);
 }
 
@@ -336,7 +334,7 @@ void addVertex()
 			if (isInLimitZone(x, y))
 			{
 				listv.addVertex(x, y);
-				setMatrixTo2(adjaGraph, listv.num, NO_EDGE_VALUE);
+				setMatrixTo2(weightMatrix, listv.num, NO_EDGE_VALUE);
 				drawMatrixZone();
 				isSaved = 0;
 			}
@@ -394,7 +392,7 @@ void addEdges()
 		}
 		listv.v[end]->show(VERTEX_CHOSE_COLOR);
 		setvisualpage(getactivepage());
-		adjaGraph[begin][end] = DEFAULT_WEIGHT;
+		weightMatrix[begin][end] = DEFAULT_WEIGHT;
 		refreshGraph(ADD_EDGE_MENU);
 		drawEdge(begin, end, EDGE_HIGHTLIGHT_COLOR);
 		setTextPrintStyle(TEXT_COLOR);
@@ -407,9 +405,9 @@ void addEdges()
 		printText(listv.v[end]->name);
 		printText(": ");
 		if (getInputWeight(weight))
-			adjaGraph[begin][end] = weight;
+			weightMatrix[begin][end] = weight;
 		else
-			adjaGraph[begin][end] = NO_EDGE_VALUE;
+			weightMatrix[begin][end] = NO_EDGE_VALUE;
 		isSaved = 0;
 		refreshGraph(ADD_EDGE_MENU);
 		listv.v[begin]->show(VERTEX_COLOR);
@@ -452,21 +450,21 @@ inline void removeRow(int row)
 {
 	for (int i = row; i < listv.num - 1; ++i)
 		for (int j = 0; j < listv.num; ++j)
-			adjaGraph[i][j] = adjaGraph[i + 1][j];
+			weightMatrix[i][j] = weightMatrix[i + 1][j];
 }
 inline void removeCol(int col)
 {
 	for (int i = 0; i < listv.num; ++i)
 		for (int j = col; j < listv.num - 1; ++j)
-			adjaGraph[i][j] = adjaGraph[i][j + 1];
+			weightMatrix[i][j] = weightMatrix[i][j + 1];
 }
 inline void removeLast()
 {
 	const int &LAST = listv.num - 1;
 	for (int i = 0; i < listv.num; ++i) // Remove last row & last column
 	{
-		adjaGraph[LAST][i] = NO_EDGE_VALUE;
-		adjaGraph[i][LAST] = NO_EDGE_VALUE;
+		weightMatrix[LAST][i] = NO_EDGE_VALUE;
+		weightMatrix[i][LAST] = NO_EDGE_VALUE;
 	}
 }
 void removeVertex(int v)
@@ -571,7 +569,7 @@ void cleanGraph()
 				   MB_APPLMODAL | MB_ICONQUESTION | MB_YESNO) == IDYES)
 	{
 		listv.clear();
-		setMatrixTo(adjaGraph, NO_EDGE_VALUE);
+		setMatrixTo(weightMatrix, NO_EDGE_VALUE);
 		refreshGraph(CLEAN_GRAPH_MENU);
 		isSaved = 1;
 	}
@@ -591,7 +589,6 @@ void help()
 					 "Dang Mai Hong An",
 			   "Help", MB_APPLMODAL | MB_ICONINFORMATION);
 }
-
 
 void showResultStack(stack &s)
 {
@@ -628,7 +625,7 @@ void showResultPathXY(double dist[], int start, int stop)
 		while (stop != start)
 		{
 			s.push(stop);
-			stop = trace[stop];
+			stop = visited[stop];
 		}
 		s.push(start);
 		return showResultStack(s);
@@ -662,21 +659,17 @@ void switchMenuItem(int chose)
 void backToMenu()
 {
 	setTextPrintStyle(TEXT_COLOR);
-	printTextWlb("Nhan phim bat ky hoac click chuot");
-	printTextWlb("de tiep tuc.");
+	printTextWlb("click chuot de tiep tuc.");
 	if (ismouseclick(WM_LBUTTONDOWN))
 		clearmouseclick(WM_LBUTTONDOWN);
 	fflush(stdin);
 	while (1)
 	{
-		if (kbhit())
-			break;
 		if (ismouseclick(WM_LBUTTONDOWN))
 			break;
 		delay(DELAY_VALUE);
 	}
-	if (ismouseclick(WM_LBUTTONDOWN))
-		clearmouseclick(WM_LBUTTONDOWN);
+
 	fflush(stdin);
 }
 

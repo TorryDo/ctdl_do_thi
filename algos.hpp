@@ -16,15 +16,19 @@
 
 using namespace std;
 
+const int IGNORE_REMOVE = -1;
+
 void SCC();
 void tarjanResult(stack &s, int stop, int components);
-void tarjanVisit(int u, int *disc, int *low, stack &s, int &count, int &components, bool callTarjanResult);
-int tarjanAlgo(bool showResult, int remove);
-void dfsTraveler(int u);
-void bfsTraveler(int u);
+void tarjanVisit(int u, int *pioneer, int *queen, stack &s, int &count, int &components, bool callTarjanResult);
+int tarjanAlgo(bool showResult, int remove = IGNORE_REMOVE);
+
+void dfsVisited(int u);
+void bfsVisited(int u);
 void dijkstra(int start, int stop);
 bool fordbellman(int start, int stop);
 void showResultPathXY(double dist[], int start, int stop);
+inline bool isEdgeAvailable(int start, int destination);
 
 void dfs()
 {
@@ -35,14 +39,14 @@ void dfs()
 
 	if (chooseStartVertex(start, "Chon dinh bat dau: ", "DFS: "))
 	{
-		setArrayTo(trace, listv.num, 0);
-		trace[start] = 1;
-		dfsTraveler(start);
-		return backToMenu();
+		setArrayTo(visited, listv.num, 0);
+		visited[start] = 1;
+		dfsVisited(start);
+		backToMenu();
 	}
 }
 
-void dfsTraveler(int u)
+void dfsVisited(int u)
 {
 	stack s;
 	s.push(u);
@@ -56,9 +60,9 @@ void dfsTraveler(int u)
 		printText("->");
 		delay(delayRunTime);
 		for (int i = 0; i < listv.num; ++i)
-			if (trace[i] == 0 && adjaGraph[u][i] != NO_EDGE_VALUE)
+			if (visited[i] == 0 && weightMatrix[u][i] != NO_EDGE_VALUE)
 			{
-				trace[i] = 1;
+				visited[i] = 1;
 				s.push(i);
 				drawEdge(u, i, EDGE_VISTED_COLOR);
 				listv.v[i]->show(VERTEX_QUEUE_COLOR);
@@ -79,14 +83,14 @@ void bfs()
 	int start;
 	if (chooseStartVertex(start, "Chon dinh bat dau: ", "BFS: "))
 	{
-		setArrayTo(trace, listv.num, 0);
-		trace[start] = 1;
-		bfsTraveler(start);
-		return backToMenu();
+		setArrayTo(visited, listv.num, 0);
+		visited[start] = 1;
+		bfsVisited(start);
+		backToMenu();
 	}
 }
 
-void bfsTraveler(int u)
+void bfsVisited(int u)
 {
 	queue q;
 	q.push(u);
@@ -100,9 +104,9 @@ void bfsTraveler(int u)
 		printText("->");
 		delay(delayRunTime);
 		for (int i = 0; i < listv.num; ++i)
-			if (trace[i] == 0 && adjaGraph[u][i] != NO_EDGE_VALUE)
+			if (visited[i] == 0 && weightMatrix[u][i] != NO_EDGE_VALUE)
 			{
-				trace[i] = 1;
+				visited[i] = 1;
 				q.push(i);
 				drawEdge(u, i, EDGE_VISTED_COLOR);
 				listv.v[i]->show(VERTEX_QUEUE_COLOR);
@@ -139,14 +143,14 @@ void shortestWayXY()
 				printTextWlb("Do thi ton tai chu trinh am.");
 		}
 	}
-	return backToMenu();
+	backToMenu();
 }
 
 bool isNegativeWeight()
 {
 	for (int i = 0; i < listv.num; ++i)
 		for (int j = 0; j < listv.num; ++j)
-			if (adjaGraph[i][j] != NO_EDGE_VALUE && adjaGraph[i][j] < 0)
+			if (weightMatrix[i][j] != NO_EDGE_VALUE && weightMatrix[i][j] < 0)
 				return 1;
 	return 0;
 }
@@ -154,12 +158,12 @@ bool isNegativeWeight()
 void dijkstra(int start, int stop)
 {
 	const int &NUM = listv.num;
-	bool free[NUM];
-	double dist[NUM];
-	setArrayTo(free, NUM, true);
-	setArrayTo(trace, NUM, start);
-	setArrayTo(dist, NUM, MAX_EDGE_VALUE);
-	dist[start] = 0;
+	bool check[NUM];
+	double total[NUM];
+	setArrayTo(check, NUM, true);
+	setArrayTo(visited, NUM, start);
+	setArrayTo(total, NUM, MAX_EDGE_VALUE);
+	total[start] = 0;
 	float d;
 	int u;
 	while (1)
@@ -167,25 +171,25 @@ void dijkstra(int start, int stop)
 		d = MAX_EDGE_VALUE;
 		u = -1;
 		for (int i = 0; i < NUM; ++i)
-			if (free[i] && dist[i] < d)
+			if (check[i] && total[i] < d)
 			{
-				d = dist[i];
+				d = total[i];
 				u = i;
 			}
 		if (u == -1 || u == stop)
 			break;
-		free[u] = 0;
+		check[u] = 0;
 		for (int i = 0; i < NUM; ++i)
 		{
-			float weight = adjaGraph[u][i];
-			if (free[i] && weight != NO_EDGE_VALUE && dist[i] > d + weight)
+			float weight = weightMatrix[u][i];
+			if (check[i] && weight != NO_EDGE_VALUE && total[i] > d + weight)
 			{
-				dist[i] = d + weight;
-				trace[i] = u;
+				total[i] = d + weight;
+				visited[i] = u;
 			}
 		}
 	}
-	showResultPathXY(dist, start, stop);
+	showResultPathXY(total, start, stop);
 }
 
 bool isNegativeCycle(double *dist)
@@ -193,7 +197,7 @@ bool isNegativeCycle(double *dist)
 	const int &NUM = listv.num;
 	for (int i = 0; i < NUM; ++i)
 		for (int j = 0; j < NUM; ++j)
-			if (adjaGraph[j][i] != NO_EDGE_VALUE && dist[j] != MAX_EDGE_VALUE && dist[i] > dist[j] + adjaGraph[j][i])
+			if (weightMatrix[j][i] != NO_EDGE_VALUE && dist[j] != MAX_EDGE_VALUE && dist[i] > dist[j] + weightMatrix[j][i])
 				return true;
 	return false;
 }
@@ -202,9 +206,9 @@ bool fordbellman(int start, int stop)
 {
 	const int &NUM = listv.num;
 	double dist[NUM];
-	setArrayTo(trace, NUM, start);
+	setArrayTo(visited, NUM, start);
 	for (int i = 0; i < NUM; ++i)
-		dist[i] = (adjaGraph[start][i] == 0) ? MAX_EDGE_VALUE : adjaGraph[start][i];
+		dist[i] = (weightMatrix[start][i] == 0) ? MAX_EDGE_VALUE : weightMatrix[start][i];
 	dist[start] = 0;
 	for (int k = 1; k < NUM - 1; ++k)
 	{
@@ -217,11 +221,11 @@ bool fordbellman(int start, int stop)
 			{
 				if (i == j)
 					continue;
-				double weight = adjaGraph[j][i];
+				double weight = weightMatrix[j][i];
 				if (weight != 0 && dist[i] > dist[j] + weight && dist[j] != NO_EDGE_VALUE)
 				{
 					dist[i] = dist[j] + weight;
-					trace[i] = j;
+					visited[i] = j;
 					stop = 0;
 				}
 			}
@@ -235,68 +239,154 @@ bool fordbellman(int start, int stop)
 	return true;
 }
 
+bool kahn(int *in, int *listed)
+{
+	int const &NUM = listv.num;
+	queue q;
+	for (int i = 0; i < NUM; ++i)
+		if (in[i] == 0)
+			q.push(i);
+	int u, count(0);
+	while (!q.isEmpty())
+	{
+		u = q.pop();
+		listed[count++] = u;
+		for (int i = 0; i < NUM; ++i)
+			if (weightMatrix[u][i] != NO_EDGE_VALUE)
+				if (--in[i] == 0)
+					q.push(i);
+	}
+	return (count == NUM);
+}
+
+void topoSort()
+{
+	if (isEmptyGraph())
+		return;
+	int const &NUM = listv.num;
+	int in[NUM];
+	int listed[NUM];
+	for (int i = 0; i < NUM; ++i)
+	{
+		in[i] = 0;
+		for (int j = 0; j < NUM; ++j)
+			if (weightMatrix[j][i] != NO_EDGE_VALUE)
+				++in[i];
+	}
+	setTextPrintStyle(TEXT_COLOR);
+	if (kahn(in, listed))
+	{
+		printTextWl("Thu tu sap xep topo: ");
+		for (int i = 0; i < NUM; ++i)
+		{
+			if (getKey() == KEY_ESC)
+				break;
+			listv.v[listed[i]]->show(VERTEX_VISTED_COLOR);
+			setTextPrintStyle(TEXT_HIGHTLIGHT_COLOR);
+			printText(listv.v[listed[i]]->name);
+			printText("->");
+			delay(delayRunTime);
+		}
+		deleteText("->");
+	}
+	else
+	{
+		printText("Do thi khong ton tai chu trinh.");
+	}
+
+	backToMenu();
+}
+
 int tarjanAlgo(bool showResult, int remove)
 {
-	const int &NUM = listv.num;
-	int disc[NUM];
-	int low[NUM];
-	setArrayTo(disc, NUM, 0);
-	setArrayTo(trace, NUM, 1);
-	int count(0), components(0);
-	stack s;
+	const int &VERTEX_NUM = listv.num;
+
+	int pioneer[VERTEX_NUM] = {0};
+	int king[VERTEX_NUM];
+
+	// setArrayTo(pioneer, VERTEX_NUM, 0);
+	setArrayTo(visited, VERTEX_NUM, 1);
+
+	int id = 0, components = 0;
+	stack seeing;
+
 	if (remove != -1)
 	{
-		disc[remove] = 1;  // ignore remove
-		trace[remove] = 0; // ignore remove
+		pioneer[remove] = 1; // ignore remove
+		visited[remove] = 0; // ignore remove
 	}
-	for (int i = 0; i < NUM; ++i)
-		if (disc[i] == 0)
-			tarjanVisit(i, disc, low, s, count, components, showResult);
+
+	for (int i = 0; i < VERTEX_NUM; ++i)
+	{
+		if (pioneer[i] == 0)
+		{
+			tarjanVisit(i, pioneer, king, seeing, id, components, showResult);
+		}
+	}
+
 	return components;
 }
-void tarjanVisit(int u, int *disc, int *low, stack &s, int &count, int &components, bool callTarjanResult)
+void tarjanVisit(int u, int *pioneer, int *king, stack &seeing, int &id, int &components, bool canShowResult)
 {
-	low[u] = disc[u] = ++count;
-	s.push(u);
+	// u = 0,
+
+	king[u] = pioneer[u] = ++id; // king[0] = 1; pioneer[0] = 1 -- king[1] = 2; pioneer[1] = 2
+	seeing.push(u);				 // stack.u = [0, 1]
+
 	int v;
+
 	for (v = 0; v < listv.num; ++v)
-		if (trace[v] != 0 && adjaGraph[u][v] != NO_EDGE_VALUE)
-			if (disc[v] != 0)
-				low[u] = minn(low[u], disc[v]);
-			else
+	{
+		if (visited[v] != 0 && isEdgeAvailable(u, v)) // if ( node v not visited && edge u-v available ) 2-0
+		{
+			// if node v is not visited, return true
+			if (pioneer[v] == 0)
 			{
-				tarjanVisit(v, disc, low, s, count, components, callTarjanResult);
-				low[u] = minn(low[u], low[v]);
+				tarjanVisit(v, pioneer, king, seeing, id, components, canShowResult);
 			}
-	if (disc[u] == low[u])
+
+			king[u] = min(king[u], king[v]);
+		}
+	}
+
+	// when find a new scc
+	if (pioneer[u] == king[u])
 	{
 		++components;
-		if (callTarjanResult)
-			tarjanResult(s, u, components);
+
+		if (canShowResult)
+		{
+			tarjanResult(seeing, u, components);
+		}
 		else
+		{
 			do
 			{
-				v = s.pop();
-				trace[v] = 0;
+				v = seeing.pop();
+				visited[v] = 0;
 			} while (v != u);
+		}
 	}
 }
-void tarjanResult(stack &s, int stop, int components)
+void tarjanResult(stack &seeing, int root, int components)
 {
 	setTextPrintStyle(TEXT_COLOR);
 	printText(components);
 	printText(":(");
+
 	int v;
 	do
 	{
-		v = s.pop();
-		trace[v] = 0;
+		v = seeing.pop();
+		visited[v] = 0;
+
 		listv.v[v]->show(VERTEX_MORE_COLOR[components]);
 		setTextPrintStyle(TEXT_HIGHTLIGHT_COLOR);
 		printText(listv.v[v]->name);
 		printText(",");
 
-	} while (v != stop);
+	} while (v != root);
+
 	deleteText(",");
 	printText(") ");
 }
@@ -304,28 +394,34 @@ void SCC()
 {
 	if (isEmptyGraph())
 		return;
-	// listv.showAll(VERTEX_COLOR_0);
+
 	setTextPrintStyle(TEXT_COLOR);
 	printTextWl("Cac thanh phan lien thong manh:");
-	int count = tarjanAlgo(1, 1); // Use tarjan algorithm to calculate SCC & show result
+
+	int count = tarjanAlgo(1, -1); // return scc components amount
+
 	setTextPrintStyle(TEXT_COLOR);
 	printTextWlb("Tong cong: ");
 	printText(count);
-	return backToMenu();
+
+	backToMenu();
 }
 
 void cutVertex()
 {
 	if (isEmptyGraph())
 		return;
-	int SCC = tarjanAlgo(0, 1);
-	int count(0);
+
+	int SCC = tarjanAlgo(0);
+
 	setTextPrintStyle(TEXT_COLOR);
 	printTextWl("Cac dinh tru tim duoc:");
+
+	int count = 0;
 	for (int i = 0; i < listv.num; ++i)
 	{
-		int SCCAfterRemove = tarjanAlgo(0, i); // tarjan algorithm without show result & delete vertex i
-		if (SCCAfterRemove > SCC)			   // is a cut vertex
+		int SCCAfterBeingRemoved = tarjanAlgo(0, i); // tarjan algorithm without show result & delete vertex i
+		if (SCCAfterBeingRemoved > SCC)				 // is a cut vertex
 		{
 			listv.v[i]->show(VERTEX_DELETE_COLOR);
 			setTextPrintStyle(TEXT_HIGHTLIGHT_COLOR);
@@ -338,67 +434,85 @@ void cutVertex()
 	setTextPrintStyle(TEXT_COLOR);
 	printTextWlb("Tong cong: ");
 	printText(count);
-	return backToMenu();
+
+	backToMenu();
 }
-bool dfsToCheckConnected(bool (*checkEdge)(int, int), int start, int stop)
+
+inline bool isEdgeAvailable(int start, int destination)
 {
-	setArrayTo(trace, listv.num, 0);
-	stack s;
-	s.push(start);
-	trace[start] = 1;
+	return (weightMatrix[start][destination] != NO_EDGE_VALUE);
+}
+
+bool dfsReachable(int start, int stop)
+{
+	setArrayTo(visited, listv.num, 0);
+
+	stack seeing;
+	seeing.push(start);
+
+	visited[start] = 1;
 	int numOfCheckedVertex(0);
-	while (!s.isEmpty())
+
+	while (!seeing.isEmpty())
 	{
-		start = s.pop();
-		if (start == stop)
+		int current = seeing.pop();
+
+		if (current == stop)
 			return 1;
+
 		++numOfCheckedVertex;
+
 		for (int i = 0; i < listv.num; ++i)
-			if (trace[i] == 0 && checkEdge(start, i))
+			if (visited[i] == 0 && isEdgeAvailable(current, i))
 			{
-				trace[i] = 1;
-				s.push(i);
+				visited[i] = 1;
+				seeing.push(i);
 			}
 	}
-	return (numOfCheckedVertex == listv.num);
+
+	return numOfCheckedVertex == listv.num;
 }
-inline bool isExistDirectedEdge(int v1, int v2)
-{
-	return (adjaGraph[v1][v2] != NO_EDGE_VALUE);
-}
+
 void dfsToCheckKnot(int start, int stop, bool *mark)
 {
-	trace[start] = 1;
+	visited[start] = 1;
 	if (start == stop)						// found path start->stop
 		for (int i = 0; i < listv.num; ++i) // update mark
-			mark[i] = trace[i] && mark[i];
+			mark[i] = visited[i] && mark[i];
 	else
 	{
 		for (int i = 0; i < listv.num; ++i)
-			if (trace[i] == 0 && adjaGraph[start][i] != NO_EDGE_VALUE)
+			if (visited[i] == 0 && isEdgeAvailable(start, i))
 				dfsToCheckKnot(i, stop, mark);
 	}
-	trace[start] = 0;
+	visited[start] = 0;
 }
 void knotVertex()
 {
 	if (isEmptyGraph())
 		return;
+
 	int start, stop, count(0);
+
 	if (chooseTwoVertices(start, stop))
 	{
 		setTextPrintStyle(TEXT_COLOR);
-		if (adjaGraph[start][stop] != NO_EDGE_VALUE ||
-			!dfsToCheckConnected(isExistDirectedEdge, start, stop))
-			printText("Khong co dinh that (co duong di truc tiep hoac khong ton tai duong di).");
+		if (isEdgeAvailable(start, stop) || !dfsReachable(start, stop))
+		{
+			printText("Khong co dinh that (co duong di");
+			printText("truc tiep hoac khong ton tai");
+			printText("duong di)");
+		}
 		else
 		{
 			bool mark[listv.num];
 			setArrayTo(mark, listv.num, true); // marked all as knot vertex
-			setArrayTo(trace, listv.num, 0);   // reset visited
+			setArrayTo(visited, listv.num, 0); // reset visited
 			dfsToCheckKnot(start, stop, mark); // calculate mark as result
 			mark[start] = mark[stop] = false;  // start & stop are not knot themself
+
 			printTextWl("Cac dinh that tim duoc: ");
+
 			for (int i = 0; i < listv.num; ++i)
 				if (mark[i]) // is knot vertex between start & stop
 				{
@@ -408,100 +522,65 @@ void knotVertex()
 					printText(listv.v[i]->name);
 					printText(", ");
 				}
+
 			deleteText(", ");
 			setTextPrintStyle(TEXT_COLOR);
 			printTextWlb("Tong cong: ");
 			printText(count);
 		}
 	}
-	return backToMenu();
+
+	backToMenu();
 }
 
 void bridgeEdge()
 {
 	if (isEmptyGraph())
 		return;
-	int SCC = tarjanAlgo(0, 1); // first find current SCC
-	int count(0);
+
+	int SCC = tarjanAlgo(0);
+	int count = 0;
+
 	setTextPrintStyle(TEXT_COLOR);
 	printTextWl("Cac canh cau tim duoc:");
-	for (int i = 0; i < listv.num; ++i)
-		for (int j = 0; j < listv.num; ++j)
-			if (adjaGraph[i][j] != NO_EDGE_VALUE)
+
+	for (int u = 0; u < listv.num; ++u)
+		for (int v = 0; v < listv.num; ++v)
+			if (isEdgeAvailable(u, v))
 			{
-				float backup = adjaGraph[i][j];			   // backup edge
-				adjaGraph[i][j] = NO_EDGE_VALUE;		   // Delete edge
-				int SCCAfterRemoveEdge = tarjanAlgo(0, 1); // recalculate SCC
-				adjaGraph[i][j] = backup;				   // restore
-				if (SCCAfterRemoveEdge > SCC)			   // is strong bridge
+				float backupWeight = weightMatrix[u][v];
+				weightMatrix[u][v] = NO_EDGE_VALUE;
+
+				int SCCAfterBeingRemovedEdge = tarjanAlgo(0);
+				weightMatrix[u][v] = backupWeight;
+
+				if (SCCAfterBeingRemovedEdge > SCC)
 				{
 					++count;
-					drawEdge(i, j, EDGE_HIGHTLIGHT_COLOR);
+
+					drawEdge(u, v, EDGE_HIGHTLIGHT_COLOR);
 					setTextPrintStyle(TEXT_HIGHTLIGHT_COLOR);
 					printText("(");
-					printText(listv.v[i]->name);
+					printText(listv.v[u]->name);
 					printText(",");
-					printText(listv.v[j]->name);
+					printText(listv.v[v]->name);
 					printText(");");
 				}
 			}
+
 	setTextPrintStyle(TEXT_COLOR);
 	printTextWlb("Tong cong: ");
 	printText(count);
-	return backToMenu();
+
+	backToMenu();
 }
 
-bool numbering(int *degIn, int *order) // Kahns algorith
+void hamilton()
 {
-	int const &NUM = listv.num;
-	queue q;
-	for (int i = 0; i < NUM; ++i)
-		if (degIn[i] == 0)
-			q.push(i);
-	int u, count(0);
-	while (!q.isEmpty())
-	{
-		u = q.pop();
-		order[count++] = u;
-		for (int i = 0; i < NUM; ++i)
-			if (adjaGraph[u][i] != NO_EDGE_VALUE)
-				if (--degIn[i] == 0)
-					q.push(i);
-	}
-	return (count == NUM);
+	MessageBox(hwnd, "Chua cap nhat", "Info", MB_APPLMODAL | MB_ICONINFORMATION);
 }
 
-void topoSort()
+void euler()
 {
-	if (isEmptyGraph())
-		return;
-	int const &NUM = listv.num;
-	int degIn[NUM];
-	int order[NUM];
-	for (int i = 0; i < NUM; ++i)
-	{
-		degIn[i] = 0;
-		for (int j = 0; j < NUM; ++j)
-			if (adjaGraph[j][i] != NO_EDGE_VALUE)
-				++degIn[i];
-	}
-	setTextPrintStyle(TEXT_COLOR);
-	if (numbering(degIn, order))
-	{
-		printTextWl("Thu tu sap xep topo: ");
-		for (int i = 0; i < NUM; ++i)
-		{
-			if (getKey() == KEY_ESC)
-				break;
-			listv.v[order[i]]->show(VERTEX_VISTED_COLOR);
-			setTextPrintStyle(TEXT_HIGHTLIGHT_COLOR);
-			printText(listv.v[order[i]]->name);
-			printText("->");
-			delay(delayRunTime);
-		}
-		deleteText("->");
-	}
-	else
-		printText("Do thi khong ton tai chu trinh.");
-	return backToMenu();
+	MessageBox(hwnd, "Chua cap nhat", "Info", MB_APPLMODAL | MB_ICONINFORMATION);
 }

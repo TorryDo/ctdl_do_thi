@@ -1,10 +1,11 @@
 #pragma once
+
 #include "list_vertices.hpp"
 #include "button.hpp"
 
 ListVertices listv;						 // List vertices
-int trace[MAX_VERTEX];					 // visited & save path...
-float adjaGraph[MAX_VERTEX][MAX_VERTEX]; // Adjacency Matrix
+int visited[MAX_VERTEX];					// visited & save path...
+float weightMatrix[MAX_VERTEX][MAX_VERTEX]; // weight Matrix
 
 int xCursor = xCURSOR;					 // For printText()
 int yCursor = yCURSOR;					 // For printText()

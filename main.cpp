@@ -92,11 +92,11 @@ void onTopBarClickListener(int id)
 		break;
 
 	case TOPBAR_ALGO_Hamilton:
-		// hamilton()
+		hamilton();
 		break;
 
 	case TOPBAR_ALGO_Euler:
-		// euler()
+		euler();
 		break;
 
 	case TOPBAR_ALGO_TopoSort:

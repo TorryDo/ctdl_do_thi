@@ -21,7 +21,7 @@ void saveFile(ListVertices *listv)
 {
 	OPENFILENAME file;
 	char fileName[MAX_PATH] = "\0";
-	ZeroMemory(&file, sizeof(file));
+	SecureZeroMemory(&file, sizeof(file));
 	file.lStructSize = sizeof(file);
 	file.lpstrFile = fileName;
 	file.nMaxFile = sizeof(fileName);
@@ -34,33 +34,33 @@ void saveFile(ListVertices *listv)
 	{
 		if (!strstr(fileName, ".graph"))
 		{
-			strcat(fileName, ".graph"); // Add file name extension if it isn't exist, but be aware !!!
+			strcat(fileName, ".graph"); // Add file name suffix if it isn't exist.
 		}
 
-		ofstream saveFile(fileName);
+		ofstream outputFileStream(fileName);
 
 		const int num = listv->num;
 
-		saveFile << num << '\n';
+		outputFileStream << num << '\n';
 		for (int i = 0; i < num; ++i)
 		{
-			saveFile << listv->v[i]->name << ' ' << listv->v[i]->x << ' ' << listv->v[i]->y << '\n';
+			outputFileStream << listv->v[i]->name << ' ' << listv->v[i]->x << ' ' << listv->v[i]->y << '\n';
 		}
 
-		saveFile << '\n'; // Endl between Vertexs and ListEdge
+		outputFileStream << '\n'; // Endl between Vertexs and ListEdge
 
 		for (int i = 0; i < num; ++i)
 		{
 			for (int j = 0; j < num; ++j)
 			{
-				if (adjaGraph[i][j] != NO_EDGE_VALUE)
+				if (weightMatrix[i][j] != NO_EDGE_VALUE)
 				{
-					saveFile << i << ' ' << j << ' ' << adjaGraph[i][j] << '\n';
+					outputFileStream << i << ' ' << j << ' ' << weightMatrix[i][j] << '\n';
 				}
 			}
 		}
 
-		saveFile.close();
+		outputFileStream.close();
 		isSaved = 1;
 	}
 }

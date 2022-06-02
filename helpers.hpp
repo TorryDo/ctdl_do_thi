@@ -69,8 +69,8 @@ bool isFloat(const char *s)
     return 1;
 }
 
-template <typename Type>
-void setArrayTo(Type *arr, int num, Type value)
+template <typename T>
+void setArrayTo(T *arr, int num, T value)
 {
 	for (int i = 0; i < num; ++i) arr[i] = value;
 }
@@ -102,14 +102,6 @@ template<typename Type>
 inline const Type& max(const Type& a, const Type& b)
 {
 	if (a > b)
-		return a;
-  	return b;
-}
-
-template<typename Type>
-inline const Type& minn(const Type& a, const Type& b)
-{
-	if (a < b)
 		return a;
   	return b;
 }
