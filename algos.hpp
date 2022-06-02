@@ -473,18 +473,22 @@ bool dfsReachable(int start, int stop)
 	return numOfCheckedVertex == listv.num;
 }
 
-void dfsToCheckKnot(int start, int stop, bool *mark)
+void dfsToCheckKnot(int start, int stop, bool *isKnotVertex)
 {
 	visited[start] = 1;
-	if (start == stop)						// found path start->stop
-		for (int i = 0; i < listv.num; ++i) // update mark
-			mark[i] = visited[i] && mark[i];
+
+	if (start == stop) // found path start->stop
+	{
+		for (int i = 0; i < listv.num; ++i) // update isKnotVertex
+			isKnotVertex[i] = visited[i] && isKnotVertex[i];
+	}
 	else
 	{
 		for (int i = 0; i < listv.num; ++i)
 			if (visited[i] == 0 && isEdgeAvailable(start, i))
-				dfsToCheckKnot(i, stop, mark);
+				dfsToCheckKnot(i, stop, isKnotVertex);
 	}
+	
 	visited[start] = 0;
 }
 void knotVertex()
@@ -497,7 +501,7 @@ void knotVertex()
 	if (chooseTwoVertices(start, stop))
 	{
 		setTextPrintStyle(TEXT_COLOR);
-		if (isEdgeAvailable(start, stop) || !dfsReachable(start, stop))
+		if (isEdgeAvailable(start, stop) || !dfsReachable(start, stop)) // if not contains knotVertex
 		{
 			printText("Khong co dinh that (co duong di");
 			printText("truc tiep hoac khong ton tai");
@@ -505,18 +509,19 @@ void knotVertex()
 		}
 		else
 		{
-			bool mark[listv.num];
-			setArrayTo(mark, listv.num, true); // marked all as knot vertex
-			setArrayTo(visited, listv.num, 0); // reset visited
-			dfsToCheckKnot(start, stop, mark); // calculate mark as result
-			mark[start] = mark[stop] = false;  // start & stop are not knot themself
+			bool isKnotVertex[listv.num];
+			setArrayTo(isKnotVertex, listv.num, true);		  // marked all as knot vertex
+			setArrayTo(visited, listv.num, 0);				  // reset visited
+			dfsToCheckKnot(start, stop, isKnotVertex);		  // calculate isKnotVertex as result
+			isKnotVertex[start] = isKnotVertex[stop] = false; // start & stop are not knot of themself
 
 			printTextWl("Cac dinh that tim duoc: ");
 
 			for (int i = 0; i < listv.num; ++i)
-				if (mark[i]) // is knot vertex between start & stop
+				if (isKnotVertex[i]) // is knot vertex between start & stop
 				{
 					++count;
+
 					listv.v[i]->show(VERTEX_DELETE_COLOR);
 					setTextPrintStyle(TEXT_HIGHTLIGHT_COLOR);
 					printText(listv.v[i]->name);

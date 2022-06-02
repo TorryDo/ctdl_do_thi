@@ -338,4 +338,5 @@ void createDialogHelp()
 {
 	setfillstyle(SOLID_FILL, TOP_BAR_COLOR);
 	bar(BUTTON_HELP_LEFT, TOPBAR_BOTTOM, DIALOG_HELP_RIGHT, DIALOG_HELP_BOTTOM);
+
 }
