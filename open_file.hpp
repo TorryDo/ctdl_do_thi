@@ -1,14 +1,8 @@
 #pragma once
 
-#include <stdio.h>
-#include <stdlib.h>
 #include "graphics.h"
 #include <fstream>
 #include <iostream>
-#include <conio.h>
-#include <limits.h>
-#include <stddef.h>
-#include <sstream>
 
 using namespace std;
 

@@ -1,18 +1,8 @@
 #pragma once
 
-#include <stdio.h>
-#include <stdlib.h>
 #include "graphics.h"
 #include <fstream>
 #include <iostream>
-#include <conio.h>
-#include <limits.h>
-#include <stddef.h>
-#include <sstream>
-#include <Windows.h>
-#include <windows.h>
-#include <windowsx.h>
-//#ifndef WINBGI_H
 #define WINBGI_H
 
 using namespace std;

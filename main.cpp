@@ -7,6 +7,7 @@
 #include "global_variables.hpp" // All Global variables
 #include "drawAll.hpp"
 #include "func.hpp"
+
 #include "top_bar.hpp"
 #include "open_file.hpp"
 #include "save_file.hpp"
