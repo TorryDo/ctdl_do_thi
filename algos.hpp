@@ -59,6 +59,7 @@ void dfsVisited(int u)
 		printText(listv.v[u]->name);
 		printText("->");
 		delay(delayRunTime);
+		// Them lan luot cac canh tu u den i vao stack
 		for (int i = 0; i < listv.num; ++i)
 			if (visited[i] == 0 && weightMatrix[u][i] != NO_EDGE_VALUE)
 			{
@@ -103,6 +104,7 @@ void bfsVisited(int u)
 		printText(listv.v[u]->name);
 		printText("->");
 		delay(delayRunTime);
+		// Duyet lan luot theo queue
 		for (int i = 0; i < listv.num; ++i)
 			if (visited[i] == 0 && weightMatrix[u][i] != NO_EDGE_VALUE)
 			{
@@ -158,10 +160,13 @@ bool isNegativeWeight()
 void dijkstra(int start, int stop)
 {
 	const int &NUM = listv.num;
+	// Su dung check de kiem tra dinh i da duoc duyet hay chua
 	bool check[NUM];
 	double total[NUM];
 	setArrayTo(check, NUM, true);
+	// Su dung visited luu dinh co duong di ngan nhat den no
 	setArrayTo(visited, NUM, start);
+	// Su dung total luu tong trong so tu start den stop
 	setArrayTo(total, NUM, MAX_EDGE_VALUE);
 	total[start] = 0;
 	float d;
@@ -170,6 +175,7 @@ void dijkstra(int start, int stop)
 	{
 		d = MAX_EDGE_VALUE;
 		u = -1;
+		// Duyet dinh start
 		for (int i = 0; i < NUM; ++i)
 			if (check[i] && total[i] < d)
 			{
@@ -179,6 +185,7 @@ void dijkstra(int start, int stop)
 		if (u == -1 || u == stop)
 			break;
 		check[u] = 0;
+		// Thay doi trong so nho nhat cua ban bac ra tu u den i
 		for (int i = 0; i < NUM; ++i)
 		{
 			float weight = weightMatrix[u][i];
@@ -191,7 +198,7 @@ void dijkstra(int start, int stop)
 	}
 	showResultPathXY(total, start, stop);
 }
-
+// Ham kiem tra do thi co trong so am hay khong
 bool isNegativeCycle(double *dist)
 {
 	const int &NUM = listv.num;
@@ -205,37 +212,43 @@ bool isNegativeCycle(double *dist)
 bool fordbellman(int start, int stop)
 {
 	const int &NUM = listv.num;
-	double dist[NUM];
+	double total[NUM];
 	setArrayTo(visited, NUM, start);
+	// Gan MAX_EDGE_VALUE cho cac canh khong co duong di tu start, gan gia tri cho total[i] tu start di den
 	for (int i = 0; i < NUM; ++i)
-		dist[i] = (weightMatrix[start][i] == 0) ? MAX_EDGE_VALUE : weightMatrix[start][i];
-	dist[start] = 0;
+		total[i] = (weightMatrix[start][i] == 0) ? MAX_EDGE_VALUE : weightMatrix[start][i];
+	total[start] = 0;
+	// Duyet NUM - 1 lan de dam bao kiem tra tat ca cac dinh co duong di tu start den stop
 	for (int k = 1; k < NUM - 1; ++k)
 	{
 		bool stop = 1;
 		for (int i = 0; i < NUM; ++i)
 		{
+			// Neu i == start, tiep tuc den vong for ke tiep
 			if (i == start)
 				continue;
 			for (int j = 0; j < NUM; ++j)
 			{
+				// neu i = j, tiep tuc den vong for ke tiep
 				if (i == j)
 					continue;
 				double weight = weightMatrix[j][i];
-				if (weight != 0 && dist[i] > dist[j] + weight && dist[j] != NO_EDGE_VALUE)
+				// Neu total[i] > total[j] + weight => cap nhat total[i] = total[j] + weight
+				if (weight != 0 && total[i] > total[j] + weight && total[j] != NO_EDGE_VALUE)
 				{
-					dist[i] = dist[j] + weight;
+					total[i] = total[j] + weight;
 					visited[i] = j;
 					stop = 0;
 				}
 			}
 		}
+		// Neu khong thay doi thi break
 		if (stop)
-			break; // if not update any dist ==> stop
+			break;
 	}
-	if (isNegativeCycle(dist))
+	if (isNegativeCycle(total))
 		return false;
-	showResultPathXY(dist, start, stop);
+	showResultPathXY(total, start, stop);
 	return true;
 }
 
@@ -266,6 +279,7 @@ void topoSort()
 	int const &NUM = listv.num;
 	int in[NUM];
 	int listed[NUM];
+	// Tinh tong ban bac vao cua cac dinh
 	for (int i = 0; i < NUM; ++i)
 	{
 		in[i] = 0;
@@ -304,7 +318,6 @@ int tarjanAlgo(bool showResult, int remove)
 	int pioneer[VERTEX_NUM] = {0};
 	int king[VERTEX_NUM];
 
-	// setArrayTo(pioneer, VERTEX_NUM, 0);
 	setArrayTo(visited, VERTEX_NUM, 1);
 
 	int id = 0, components = 0;
@@ -312,8 +325,8 @@ int tarjanAlgo(bool showResult, int remove)
 
 	if (remove != -1)
 	{
-		pioneer[remove] = 1; // ignore remove
-		visited[remove] = 0; // ignore remove
+		pioneer[remove] = 1;
+		visited[remove] = 0;
 	}
 
 	for (int i = 0; i < VERTEX_NUM; ++i)
@@ -328,10 +341,9 @@ int tarjanAlgo(bool showResult, int remove)
 }
 void tarjanVisit(int u, int *pioneer, int *king, stack &seeing, int &id, int &components, bool canShowResult)
 {
-	// u = 0,
 
-	king[u] = pioneer[u] = ++id; // king[0] = 1; pioneer[0] = 1 -- king[1] = 2; pioneer[1] = 2
-	seeing.push(u);				 // stack.u = [0, 1]
+	king[u] = pioneer[u] = ++id;
+	seeing.push(u);
 
 	int v;
 
@@ -345,7 +357,7 @@ void tarjanVisit(int u, int *pioneer, int *king, stack &seeing, int &id, int &co
 				tarjanVisit(v, pioneer, king, seeing, id, components, canShowResult);
 			}
 
-			king[u] = min(king[u], king[v]);
+			king[u] = min(king[u], king[v]); // king[0] = 0
 		}
 	}
 
@@ -488,7 +500,7 @@ void dfsToCheckKnot(int start, int stop, bool *isKnotVertex)
 			if (visited[i] == 0 && isEdgeAvailable(start, i))
 				dfsToCheckKnot(i, stop, isKnotVertex);
 	}
-	
+
 	visited[start] = 0;
 }
 void knotVertex()
@@ -503,16 +515,18 @@ void knotVertex()
 		setTextPrintStyle(TEXT_COLOR);
 		if (isEdgeAvailable(start, stop) || !dfsReachable(start, stop)) // if not contains knotVertex
 		{
+			printTextWl("");
 			printText("Khong co dinh that (co duong di");
 			printText("truc tiep hoac khong ton tai");
 			printText("duong di)");
+			printTextWlb("");
 		}
 		else
 		{
 			bool isKnotVertex[listv.num];
 			setArrayTo(isKnotVertex, listv.num, true);		  // marked all as knot vertex
 			setArrayTo(visited, listv.num, 0);				  // reset visited
-			dfsToCheckKnot(start, stop, isKnotVertex);		  // calculate isKnotVertex as result
+			dfsToCheckKnot(start, stop, isKnotVertex);		  // set isKnotVertex
 			isKnotVertex[start] = isKnotVertex[stop] = false; // start & stop are not knot of themself
 
 			printTextWl("Cac dinh that tim duoc: ");

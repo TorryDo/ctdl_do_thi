@@ -580,8 +580,6 @@ void help()
 	MessageBox(hwnd, "Do an do thi nhom 35.\n"
 					 "Su dung:\n"
 					 "Phim <ESC> : Huy chuc nang.\n"
-					 "Phim <Q>/<q> : Thoat chuong trinh.\n"
-					 "Phim <LEFT>/<RIGHT> : Chinh toc do giam/tang.\n"
 					 "Su dung cac nut de thuc hien thao tac tren man hinh.\n"
 					 "\nTac gia:\n"
 					 "Tran Minh Hoang\n"

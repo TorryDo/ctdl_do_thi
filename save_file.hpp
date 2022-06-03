@@ -59,7 +59,7 @@ void closeFile(ListVertices *listVertex)
 {
 	if (!isSaved && !listVertex->isEmpty())
 	{
-		int id = MessageBox(hwnd, "Ban co muon luu do thi khong?", "Save file", MB_APPLMODAL | MB_ICONEXCLAMATION | MB_YESNOCANCEL);
+		int id = MessageBox(hwnd, "Ban co muon luu do thi khong?", "Warning", MB_APPLMODAL | MB_ICONEXCLAMATION | MB_YESNOCANCEL);
 		if (id == IDCANCEL)
 			return;
 		if (id == IDYES)

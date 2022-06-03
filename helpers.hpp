@@ -188,6 +188,7 @@ void drawCurvedLine2(int x1, int y1, int x2, int y2, int color, float w)
 	float theta = atan2((y1 + y2) / 2 - yO, (x1 + x2) / 2 - xO);
 	float xT = xO + r * cos(theta);
 	float yT = yO + r * sin(theta);
+
 	setcolor(color);
 	setlinestyle(SOLID_LINE, 1, 2);
 	arc(xO, yO, stangle, endangle, r);
@@ -227,6 +228,7 @@ void drawCurvedLine(int x1, int y1, int x2, int y2, int color, float w)
 	float yT = yO + r * sin(theta);
 	if (xT <= wbLEFT || xT >= wRIGHT || yT <= wTOP || yT >= wBOTTOM)
 		return drawCurvedLine2(x1, y1, x2, y2, color, w);
+		
 	setcolor(color);
 	setlinestyle(SOLID_LINE, 1, 2);
 	arc(xO, yO, stangle, endangle, r);
