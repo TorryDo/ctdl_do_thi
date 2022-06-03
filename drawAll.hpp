@@ -33,7 +33,7 @@ void drawMatrixZone()
 	settextstyle(COMPLEX_FONT, HORIZ_DIR, USER_CHAR_SIZE);
 	settextjustify(LEFT_TEXT, TOP_TEXT);
 	setcolor(BLACK);
-	outtextxy(6, mTOP + 35, "Weighted Matrix");
+	outtextxy(6, mTOP + 35, "Adjacency Matrix");
 	bar(aLEFT, mTOP + 55, mRIGHT, mRIGHT + 60);
 	rectangle(aLEFT, mTOP + 55, mRIGHT, mRIGHT + 60);
 	const int &n = listv.num + 1;
@@ -70,7 +70,8 @@ void drawMatrixZone()
 		for (int j = 1; j < n; ++j)
 			if (weightMatrix[i - 1][j - 1] != NO_EDGE_VALUE)
 			{
-				convertToChar(weightMatrix[i - 1][j - 1], str);
+				// convertToChar(weightMatrix[i - 1][j - 1], str);
+				convertToChar(1, str);
 				outtextxy(ADJUST_TEXT_X + j * width, i * hight + ADJUST_TEXT_Y, str);
 			}
 	}
